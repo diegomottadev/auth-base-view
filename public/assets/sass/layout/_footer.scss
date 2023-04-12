@@ -1,0 +1,27 @@
+.layout-footer {
+    padding: 20px;
+    background-color: $footerBgColor;
+    border-top: 1px solid $footerBorderColor;
+
+    img {
+        height: 30px;
+        margin-top: 4px;
+    }
+
+    .footer-icons {
+        text-align: right;
+
+        button {
+            color: $textSecondaryColor;
+            font-size: 1.5rem;
+            margin-right: 16px;
+            margin-top: 6px;
+            display: inline-block;
+            transition: color $transitionDuration;
+
+            &:hover {
+                color: $textColor;
+            }
+        }
+    }
+}

@@ -1,0 +1,81 @@
+@mixin clearfix {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie);
+}
+
+@mixin border-radius-bottom($val) {
+    border-bottom-left-radius: $val;
+    border-bottom-right-radius: $val;
+}
+
+@mixin border-radius-right($val) {
+    border-top-right-radius: $val;
+    border-bottom-right-radius: $val;
+}
+
+@mixin border-radius-left($val) {
+    border-top-left-radius: $val;
+    border-bottom-left-radius: $val;
+}
+
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+
+@mixin border-radius($val) {
+    -moz-border-radius: $val;
+    -webkit-border-radius: $val;
+    border-radius: $val;
+}
+
+@mixin border-radius-top($val) {
+    -moz-border-radius-topleft: $val;
+    -webkit-border-top-left-radius: $val;
+    border-top-left-radius: $val;
+    -moz-border-radius-topright: $val;
+    -webkit-border-top-right-radius: $val;
+    border-top-right-radius: $val;
+}
+
+@mixin shadow($value) {
+    -webkit-box-shadow: $value;
+    -moz-box-shadow: $value;
+    box-shadow: $value;
+}
+
+@mixin flex() {
+    display: -ms-flexbox;
+    display: flex;
+}
+
+@mixin flex-justify-between() {
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+@mixin flex-align-center() {
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+@mixin flex-wrap($value) {
+    -ms-flex-wrap: $value;
+    flex-wrap: $value;
+}
+
+@mixin flex-justify-center() {
+    -ms-flex-pack: center;
+    justify-content: center; 
+}

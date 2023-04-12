@@ -1,0 +1,392 @@
+.layout-wrapper {
+    .layout-topbar {
+        position: fixed;
+        height: 60px;
+        top: 0;
+        left: 250px;
+        right: 0;
+        z-index: 997;
+        padding: 8px 25px;
+        background-color: $topbarBgColor;
+        @include clearfix();
+        box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+
+        .layout-topbar-logo {
+            display: none;
+
+            img {
+                margin-top: 7px;
+                height: 30px;
+            }
+        }
+
+        .layout-menu-button {
+            cursor: pointer;
+            float: left;
+            width: 44px;
+            height: 44px;
+            line-height: 44px;
+            text-align: center;
+            color: $topbarIconColor;
+            border-radius: 50%;
+            transition: background-color $transitionDuration;
+
+            i {
+                line-height: inherit;
+                font-size: 24px;
+            }
+
+            &:hover {
+                background-color: $topbarIconHoverBgColor;
+            }
+        }
+
+        #topbar-menu-button {
+            cursor: pointer;
+            font-size: 28px;
+            width: 44px;
+            height: 44px;
+            line-height: 44px;
+            display: none;
+            float: right;
+            text-align: center;
+            border-radius: 50%;
+            color: $topbarIconColor;
+            transition: background-color $transitionDuration;
+
+            i {
+                line-height: inherit;
+                font-size: 24px;
+            }
+
+            &:hover {
+                background-color: $topbarIconHoverBgColor;
+            }
+        }
+
+        .topbar-menu {
+            float: right;
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+
+            > li {
+                float: right;
+                position: relative;
+                margin-left: 14px;
+
+                > button {
+                    cursor: pointer;
+                    position: relative;
+                    display: block;
+                    width: 44px;
+                    height: 44px;
+                    line-height: 44px;
+                    text-align: center;
+                    border-radius: 50%;
+                    transition: background-color $transitionDuration;
+
+                    .topbar-icon {
+                        color: $topbarIconColor;
+                        line-height: inherit;
+                        font-size: 24px;
+                    }
+
+                    > img {
+                        width: 36px;
+                        margin-top: 4px;
+                    }
+
+                    &:hover {
+                        background-color: $topbarIconHoverBgColor;
+                    }
+
+                    .topbar-item-name {
+                        display: none;
+                    }
+
+                    .topbar-badge {
+                        position: absolute;
+                        right: 4px;
+                        top: 4px;
+                        background-color: #e0284f;
+                        color: #ffffff;
+                        text-align: center;
+                        line-height: 16px;
+                        min-width: 16px;
+                        min-height: 16px;
+                        display: block;
+                        font-size: 12px;
+                        border-radius: 100%;
+                    }
+                }
+
+                > ul {
+                    position: absolute;
+                    border: 1px solid $topbarMenuBorderColor;
+                    top: 55px;
+                    right: -18px;
+                    margin: 0;
+                    display: none;
+                    min-width: 250px;
+                    padding: 8px 12px;
+                    list-style-type: none;
+                    background-color: $topbarMenuBgColor;
+                    animation-duration: $transitionDuration;
+                    border-radius: $borderRadius;
+                    box-shadow: 0 2px 10px 0 rgba(0, 3, 6, 0.16);
+
+
+                    &.layout-submenu-container-enter {
+                        max-height: 0;
+                        display: none;
+                    }
+
+                    &.layout-submenu-container-enter-active{
+                        max-height: 500px;
+                    }
+
+                    &.layout-submenu-container-exit {
+                        max-height: 500px;
+                    }
+
+                    &.layout-submenu-container-exit-active {
+                        max-height: 0;
+                        display: none;
+                    }
+
+                    &:before, &:after {
+                        bottom: 100%;
+                        border: solid transparent;
+                        content: " ";
+                        height: 0;
+                        width: 0;
+                        position: absolute;
+                        pointer-events: none;
+                        left: 210px;
+                    }
+
+                    &:before {
+                        border-color: rgba(216, 216, 220, 0);
+                        border-bottom-color: $topbarMenuBorderColor;
+                        border-width: 10px;
+                        margin-left: -10px;
+                    }
+
+                    &:after {
+                        border-color: rgba(244, 244, 249, 0);
+                        border-bottom-color: $topbarMenuBgColor;
+                        border-width: 9px;
+                        margin-left: -9px;
+                    }
+
+                    button {
+                        box-sizing: border-box;
+                        padding: 8px 12px;
+                        text-align: left;
+                        display: block;
+                        width: 100%;
+                        color: $menuitemTextColor;
+                        position: relative;
+                        border-radius: $borderRadius;
+                        transition: background-color $transitionDuration;
+
+                        i {
+                            margin-right: 8px;
+                            color: $menuitemIconColor;
+                        }
+
+                        img {
+                            margin-right: 8px;
+                            width: 24px;
+                        }
+
+                        i,img,span {
+                            vertical-align: middle;
+                        }
+
+                        .topbar-submenuitem-badge {
+                            background-color: $topbarBadgeBgColor;
+                            color: $topbarBadgeTextColor;
+                            text-align: center;
+                            line-height: 16px;
+                            min-width: 16px;
+                            height: 16px;
+                            font-size: 12px;
+                            border-radius: 100%;
+                            display: inline-block;
+                            margin-left: 8px;
+                        }
+
+                        &:hover {
+                            background-color: $menuitemHoverBgColor;
+                        }
+                    }
+                }
+
+                &.active-topmenuitem {
+                    > ul {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 896px) {
+    .layout-wrapper {
+        .layout-topbar {
+            text-align: center;
+
+            .layout-topbar-logo {
+                display: inline-block;
+            }
+
+            #topbar-menu-button {
+                display: block;
+            }
+
+            .topbar-menu {
+                background-color: $topbarMenuBgColor;
+                border: 1px solid $topbarMenuBorderColor;
+                position: absolute;
+                top: 70px;
+                right: 25px;
+                width: 250px;
+                animation-duration: $transitionDuration;
+                display: none;
+                list-style-type: none;
+                margin: 0;
+                padding: 8px 12px;
+                box-shadow: 0 2px 10px 0 rgba(0, 3, 6, 0.16);
+
+                &:before, &:after {
+                    bottom: 100%;
+                    border: solid transparent;
+                    content: " ";
+                    height: 0;
+                    width: 0;
+                    position: absolute;
+                    pointer-events: none;
+                    left: 225px;
+                }
+
+                &:before {
+                    border-color: rgba(216, 216, 220, 0);
+                    border-bottom-color: $topbarMenuBorderColor;
+                    border-width: 10px;
+                    margin-left: -10px;
+                }
+
+                &:after {
+                    border-color: rgba(244, 244, 249, 0);
+                    border-bottom-color: $topbarMenuBgColor;
+                    border-width: 9px;
+                    margin-left: -9px;
+                }
+
+                &.topbar-menu-visible {
+                    display: block;
+                }
+
+                > li {
+                    width: 100%;
+                    margin: 0;
+                    float: none;
+
+                    &.active-topmenuitem {
+                        > ul {
+                            display: block;
+                        }
+                    }
+
+                    &.user-profile {
+                        > button {
+                            img {
+                                margin-right: 8px;
+                                margin-top: 0;
+                                width: 24px;
+                                vertical-align: middle;
+                            }
+                        }
+                    }
+
+                    button {
+                        box-sizing: border-box;
+                        height: auto;
+                        line-height: 1;
+                        width: 100%;
+                        display: block;
+                        padding: 8px 12px;
+                        position: relative;
+                        text-align: left;
+                        border-radius: $borderRadius;
+                        transition: background-color $transitionDuration;
+
+                        .topbar-icon {
+                            display: inline-block;
+                            vertical-align: middle;
+                            margin-right: 8px;
+                            font-size: 16px;
+                            color: $menuitemIconColor;
+                        }
+
+                        &:hover {
+                            background-color: $menuitemHoverBgColor;
+                            color: $textColor;
+                        }
+
+                        .topbar-item-name {
+                            display: inline-block;
+                            vertical-align: middle;
+                            color: $menuitemTextColor;
+                        }
+
+                        .topbar-badge {
+                            background-color: $topbarBadgeBgColor;
+                            color: $topbarBadgeTextColor;
+                            text-align: center;
+                            line-height: 16px;
+                            min-width: 16px;
+                            height: 16px;
+                            font-size: 12px;
+                            border-radius: 100%;
+                            display: inline-block;
+                            position: static;
+                            margin-left: 8px;
+                        }
+                    }
+
+                    > ul {
+                        display: none;
+                        list-style-type: none;
+                        padding: 0 0 0 0;
+                        margin: 0;
+                        position: static;
+                        top: auto;
+                        left: auto;
+                        width: 100%;
+                        min-width: auto;
+                        border: 0 none;
+                        box-shadow: none;
+
+                        &:before, &:after {
+                            display: none;
+                        }
+
+                        li {
+                            button {
+                                padding-left: 28px;
+
+                                img {
+                                    margin-right: 8px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

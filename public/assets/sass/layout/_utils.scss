@@ -1,0 +1,125 @@
+/* Utils */
+.clearfix:after {
+    content:" ";
+    display:block;
+    clear:both;
+}
+
+.card {
+    background: $cardBgColor;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: $cardBorder;
+    border-radius: $borderRadius;
+
+    &.card-w-title {
+        padding-bottom: 16px;
+    }
+
+    &.no-gutter {
+        margin-bottom: 0;
+    }
+}
+
+.nopad {
+    padding: 0;
+
+    .ui-panel-content {
+        padding: 0;
+    }
+}
+
+.p-sr-only {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    word-wrap: normal !important;
+}
+
+.separator {
+    border: 1px solid $dividerColor;
+}
+
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@-webkit-keyframes fadeOutUp {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+}
+
+@keyframes fadeOutUp {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -20px, 0);
+  }
+}
+
+.fadeInDown {
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;
+}
+
+.fadeOutUp {
+    -webkit-animation-name: fadeOutUp;
+    animation-name: fadeOutUp;
+}
+
+.layout-wrapper {
+    .layout-ajax-loader {
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+
+        .layout-ajax-loader-icon {
+            color: $topbarBgColor;
+            font-size: 32px;
+        }
+    }
+}
+
+::-webkit-input-placeholder {color:$textSecondaryColor}
+:-moz-placeholder           {color:$textSecondaryColor}
+::-moz-placeholder          {color:$textSecondaryColor}
+:-ms-input-placeholder      {color:$textSecondaryColor}
