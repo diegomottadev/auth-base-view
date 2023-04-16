@@ -1,20 +1,20 @@
 import React  from 'react';
 import AppBreadcrumb from '../../components/_pesitos/AppBreadcrumb';
-import WayPayList from './components/WayPayList';
+import PaymentMethodList from './components/PaymentMethodList';
 
-import WayPayToolbar  from './components/WayPayToolbar';
+import PaymentMethodToolbar  from './components/PaymentMethodToolbar';
 
 
-const WayPay = () => {
+const PaymentMethod = () => {
 
     return (
         <div >
            <AppBreadcrumb meta={'Formas de Pago'} /> 
            <div className="layout-content">
-            <WayPayToolbar />
-            <WayPayList />
+            <PaymentMethodToolbar />
+            <PaymentMethodList />
            </div>
         </div>
     );
 }
-export default WayPay;
+export default PaymentMethod;

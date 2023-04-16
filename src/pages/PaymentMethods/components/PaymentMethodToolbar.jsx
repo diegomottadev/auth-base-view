@@ -5,26 +5,26 @@ import { useNavigate } from 'react-router-dom';
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { saveAs } from 'file-saver';
-import WayPayService from '../../../services/waypayes/WayPayService';
+import PaymentMethodService from '../../../services/PaymentMethods/PaymentMethodService';
 
-const WayPayToolbar = () => {
+const PaymentMethodToolbar = () => {
 
     const navigate = useNavigate();
 
-    const navigateToWayPayForm = () => {
-        navigate('/waypayes/new');
+    const navigateToMethodPaymentForm = () => {
+        navigate('/paymentMethods/new');
     };
 
     const onExportToExcel = async () => {
-        const url = await WayPayService.exportWayPayes();
-        const filename = 'waypayes.xlsx'; // Nombre del archivo
+        const url = await PaymentMethodService.exportPaymentMethods();
+        const filename = 'methods-payments.xlsx'; // Nombre del archivo
         saveAs(url, filename); // Guardar el archivo en una ubicación específica
     };
 
     const toolbarLeftTemplate = () => {
         return (
             <>
-                <Button label="Nuevo" icon="pi pi-plus-circle" style={{ marginRight: '.5em' }} onClick={navigateToWayPayForm} />
+                <Button label="Nuevo" icon="pi pi-plus-circle" style={{ marginRight: '.5em' }} onClick={navigateToMethodPaymentForm} />
             </>
         );
     };
@@ -50,4 +50,4 @@ const WayPayToolbar = () => {
    
 }
 
-export default WayPayToolbar;
+export default PaymentMethodToolbar;

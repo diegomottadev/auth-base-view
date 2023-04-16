@@ -74,9 +74,6 @@ const CategoryForm = () => {
                     life: 3000,
                 });
             }
-
-            console.log(response.data);
-
             setName('');
             setDescription('');
 
@@ -85,9 +82,14 @@ const CategoryForm = () => {
         }
     };
 
+    const goBackCategoryList = () => {
+        navigate('/categories');
+      };
+
+
     return (
         <div>
-            <AppBreadcrumb meta={'Categorías / Editar'} /> : <AppBreadcrumb meta={'Categorías / Nuevo'} />}
+            {categoryId ? <AppBreadcrumb meta={'Categorías / Editar'} /> : <AppBreadcrumb meta={'Categorías / Nuevo'} />}
             <div className="layout-content">
 
             <Toast ref={toast} onHide={() => navigate('/categories')} />
@@ -120,14 +122,17 @@ const CategoryForm = () => {
                             <div className="flex justify-content-end mt-2">
                                 <div className="p-d-flex">
                                     <Button
-                                        label="Cancelar"
-                                        className="p-button-raised p-button-warning mr-2 mb-2"
+                                       label="Volver"
+                                        icon="pi pi-arrow-circle-left"
+                                        className="p-button-raised p-button-secondary mr-2 mb-2"
+                                        onClick={goBackCategoryList}
                                     />
                                 </div>
                                 <div className="p-d-flex">
                                     <Button
                                         type="submit"
                                         label={category ? 'Actualizar' : 'Guardar'}
+                                        icon="pi pi-save"
                                         className="p-button-raised p-button-success"
                                     />
                                 </div>

@@ -6,14 +6,18 @@ import { InputText } from 'primereact/inputtext';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Error from '../../../components/Error';
-import WayPayService from '../../../services/waypayes/WayPayService'
+import PaymentMethodService from '../../../services/PaymentMethods/PaymentMethodService'
+import Swal from 'sweetalert2'
+import { Toast } from 'primereact/toast';
 
-export const WayPayList = () => {
+export const PaymentMethodList = () => {
 
     const dt = useRef(null);
+    const toast = useRef();
+
     const navigate = useNavigate();
 
-    const [wayPayes, setWayPayes] = useState(false);
+    const [methodPayments, setMethodPayments] = useState(false);
     const [loadingDatatable, setLoadingDatatable] = useState(false);
     const [totalRecords, setTotalRecords] = useState(0);
     const [showError, setShowError] = useState(false);
@@ -29,9 +33,9 @@ export const WayPayList = () => {
 
             try {
                 setLoadingDatatable(true);
-                const {data:{data:result, total:total}} =  await WayPayService.allWayPayes(lazyParams)
+                const {data:{data:result, total:total}} =  await PaymentMethodService.allPaymentMethods(lazyParams)
                 setTotalRecords(total);
-                setWayPayes(result);
+                setMethodPayments(result);
                 setLoadingDatatable(false);
                // });
             } catch (err){
@@ -58,8 +62,34 @@ export const WayPayList = () => {
         setLazyParams(_lazyParams);
     }
 
-    const onEditWayPay = (wayPayId) => {
-        navigate(`/waypayes/${wayPayId}/edit`);
+    const onEditWayPay = (methodPaymentId) => {
+        navigate(`/paymentMethods/${methodPaymentId}/edit`);
+    }
+
+
+    const onDeleteWayPay = (methodPaymentId) => {
+        Swal.fire({
+            title: '',
+            text: 'Confirma eliminar la forma de permanentemente',
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            denyButtonText: `Cancelar`,
+            confirmButtonColor: '#2196F3',
+            cancelButtonColor: '#fbc02d',
+          }).then( async(result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                  let wayPayDelete = await PaymentMethodService.deletePaymentMethod(methodPaymentId);
+                //   Swal.fire('', `${wayPayDelete.message}`, 'success')
+                  toast.current.show({
+                    severity: 'success',
+                    summary: 'Exito',
+                    detail: `${wayPayDelete.message}`,
+                    life: 3000,
+                });
+                  setLazyParams({...lazyParams,page: lazyParams.page});
+            } 
+        })
     }
 
     const header = (
@@ -77,6 +107,8 @@ export const WayPayList = () => {
         return (
             <div className="actions">
                 <Button tooltip={"Editar"}  tooltipOptions={{ position: 'top' }} icon="pi pi-pencil" className="p-button-raised p-button-success p-mr-2" onClick={() => onEditWayPay(rowData.id)} />
+                <Button tooltip={"Eliminar"}  tooltipOptions={{ position: 'top' }} icon="pi pi-trash" className="p-button-raised p-button-danger p-mr-2" onClick={() => onDeleteWayPay(rowData.id)} />
+
                 {/* <Button icon="pi pi-trash" className="p-button-rounded p-button-warning" onClick={() => confirmDeleteTeacher(rowData)} /> */}
             </div>
         );
@@ -93,7 +125,9 @@ export const WayPayList = () => {
             <div className="col-12">
                 <div className="card">
                     <h5>Formas de pago</h5>
-                     <DataTable ref={dt} value={wayPayes} lazy
+                     <Toast ref={toast} />
+
+                     <DataTable ref={dt} value={methodPayments} lazy
                         paginator first={lazyParams.first} rows={10} totalRecords={totalRecords} onPage={onPage}
                         loading={loadingDatatable}
                         className="p-datatable-gridlines" header={header}
@@ -109,4 +143,4 @@ export const WayPayList = () => {
 
             
 }
-export default WayPayList;
+export default PaymentMethodList;

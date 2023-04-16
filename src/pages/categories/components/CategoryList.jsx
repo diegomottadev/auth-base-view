@@ -7,10 +7,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Error from '../../../components/Error';
 import CaterogyService from '../../../services/categories/CaterogyService'
+import Swal from 'sweetalert2'
+import { Toast } from 'primereact/toast';
 
 const CategoryList = () => {
 
     const dt = useRef(null);
+    const toast = useRef();
+
     const navigate = useNavigate();
 
     const [categories, setCategories] = useState(false);
@@ -40,7 +44,6 @@ const CategoryList = () => {
                 setShowError(true);
                 setLoadingDatatable(false);
             }
-            
         }
         loadLazyData();
     },[lazyParams]) 
@@ -62,6 +65,31 @@ const CategoryList = () => {
         navigate(`/categories/${categoryId}/edit`);
     }
 
+    const onDeleteCategory = (categoryId) => {
+        Swal.fire({
+            title: '',
+            text: 'Confirma eliminar la categoria permanentemente',
+            showCancelButton: true,
+            confirmButtonText: 'Aceptar',
+            denyButtonText: `Cancelar`,
+            confirmButtonColor: '#2196F3',
+            cancelButtonColor: '#fbc02d',
+          }).then( async(result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                  let categoryDeleted = await CaterogyService.deleteCategory(categoryId);
+                //   Swal.fire('', `${categoryDeleted.message}`, 'success')
+                  toast.current.show({
+                    severity: 'success',
+                    summary: 'Exito',
+                    detail: `${categoryDeleted.message}`,
+                    life: 3000,
+                });
+                  setLazyParams({...lazyParams,page: lazyParams.page});
+            } 
+        })
+    }
+
     const header = (
 
         <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
@@ -77,6 +105,8 @@ const CategoryList = () => {
         return (
             <div className="actions">
                 <Button tooltip={"Editar"}  tooltipOptions={{ position: 'top' }} icon="pi pi-pencil" className="p-button-raised p-button-success p-mr-2" onClick={() => onEditCategory(rowData.id)} />
+                <Button tooltip={"Eliminar"}  tooltipOptions={{ position: 'top' }} icon="pi pi-trash" className="p-button-raised p-button-danger p-mr-2" onClick={() => onDeleteCategory(rowData.id)} />
+
                 {/* <Button icon="pi pi-trash" className="p-button-rounded p-button-warning" onClick={() => confirmDeleteTeacher(rowData)} /> */}
             </div>
         );
@@ -93,6 +123,8 @@ const CategoryList = () => {
             <div className="col-12">
                 <div className="card">
                     <h5>Categorias</h5>
+                    <Toast ref={toast} />
+
                      <DataTable ref={dt} value={categories} lazy
                         paginator first={lazyParams.first} rows={10} totalRecords={totalRecords} onPage={onPage}
                         loading={loadingDatatable}

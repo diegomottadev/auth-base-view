@@ -36,8 +36,8 @@ import AxiosInterceptors from './components/_pesitos/AxiosInterceptors';
 import { me } from './services/auth/Authorization';
 import Category from './pages/categories/Category';
 import CategoryForm from './pages/categories/forms/CategoryForm';
-import WayPay from './pages/waypayes/WayPay';
-import WayPayForm from './pages/waypayes/form/WayPayForm';
+import PaymentMethod from './pages/PaymentMethods/PaymentMethod';
+import PaymentMethodForm from './pages/PaymentMethods/form/PaymentMethodForm';
 
 
 
@@ -88,7 +88,7 @@ const App = () => {
     //     { path: '/home', parent: 'General', label: 'Estadísticas' },
     //     { path: '/movements', parent: 'Secciones', label: 'Movimientos' },
     //     { path: '/categories', parent: 'Secciones', label: 'Categorias' },
-    //     { path: '/waypayes', parent: 'Secciones', label: 'Formas de pagos' },
+    //     { path: '/paymentMethods', parent: 'Secciones', label: 'Formas de pagos' },
 
     // ];
 
@@ -104,7 +104,7 @@ const App = () => {
             items: [
                 { label: 'Movimientos', icon: 'pi pi-fw pi-money-bill', to: '/movements' },
                 { label: 'Categorias', icon: 'pi pi-fw pi-table', to: '/categories' },
-                { label: 'Formas de pago', icon: 'pi pi-fw pi-bookmark', to: '/waypayes' },
+                { label: 'Formas de pago', icon: 'pi pi-fw pi-bookmark', to: '/paymentMethods' },
             ]
         },
       
@@ -137,7 +137,7 @@ const App = () => {
             }
             try {
                 const { data } = await me();
-                console.log('user',data);
+                // console.log('user',data);
                 setUsuario(data);
                 setCargandoUsuario(false)
             } catch (error) {
@@ -378,11 +378,11 @@ const App = () => {
                             <Route exact path="/" element={<Dashboard />} />
                             <Route path="/movements" element={<FormLayoutDemo />} />
                             <Route path="/categories" element={<Category />} />
-                            <Route path="/waypayes" element={<WayPay />} />
+                            <Route path="/paymentMethods" element={<PaymentMethod />} />
                             <Route exact path="/categories/new" element={<CategoryForm />}  />
                             <Route path="/categories/:categoryId/edit" element={<CategoryForm />} />
-                            <Route exact path="/waypayes/new" element={<WayPayForm/>}  />
-                            <Route path="/waypayes/:wayPayId/edit" element={<WayPayForm />} />
+                            <Route exact path="/paymentMethods/new" element={<PaymentMethodForm/>}  />
+                            <Route path="/paymentMethods/:paymentMethodId/edit" element={<PaymentMethodForm />} />
                         </Routes>
     
                     <AppFooter />

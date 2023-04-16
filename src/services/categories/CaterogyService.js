@@ -19,6 +19,11 @@ class CategoryService {
         return response.data;
     };
 
+    deleteCategory = async (categoryId) => {
+        const response = await axios.delete(`${CATEGORY_API_BASE_URL}/${categoryId}`);
+        return response.data;
+    };
+
     allCategories = async (params) => {
         console.log(params.search)
         let url = `${CATEGORY_API_BASE_URL}?page=${params.page+1}`;

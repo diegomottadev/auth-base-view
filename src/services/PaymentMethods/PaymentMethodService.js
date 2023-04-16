@@ -1,25 +1,30 @@
 import { BASE_URL } from "../../helpers/BaseUrl"
 import axios from 'axios';
 
-const WAY_PAY_API_BASE_URL = `${BASE_URL}/waypayes`;
+const WAY_PAY_API_BASE_URL = `${BASE_URL}/paymentMethods`;
 
-class WayPayService {
+class PaymentMethodService {
 
-    createWayPay = (waypay) => {
-        return axios.post(WAY_PAY_API_BASE_URL, waypay);
+    createPaymentMethod = (methodPayment) => {
+        return axios.post(WAY_PAY_API_BASE_URL, methodPayment);
     };
 
 
-    getWayPay = (waypayId) => {
-        return axios.get(`${WAY_PAY_API_BASE_URL}/${waypayId}`);
+    getPaymentMethod = (methodPaymentId) => {
+        return axios.get(`${WAY_PAY_API_BASE_URL}/${methodPaymentId}`);
     };
 
-    updateWayPay = async (waypayId, body) => {
-        const response = await axios.put(`${WAY_PAY_API_BASE_URL}/${waypayId}`, body);
+    updatePaymentMethod = async (methodPaymentId, body) => {
+        const response = await axios.put(`${WAY_PAY_API_BASE_URL}/${methodPaymentId}`, body);
         return response.data;
     };
 
-    allWayPayes = async (params) => {
+    deletePaymentMethod = async (methodPaymentId) => {
+        const response = await axios.delete(`${WAY_PAY_API_BASE_URL}/${methodPaymentId}`);
+        return response.data;
+    };
+
+    allPaymentMethods = async (params) => {
         console.log(params.search)
         let url = `${WAY_PAY_API_BASE_URL}?page=${params.page+1}`;
         if(params.search!==null){
@@ -29,7 +34,7 @@ class WayPayService {
         return await axios.get(url);
     }
 
-    exportWayPayes = async (params) => {
+    exportPaymentMethods= async (params) => {
 
         let url = `${WAY_PAY_API_BASE_URL}/export`;
         // if(params.search!==null){
@@ -44,4 +49,4 @@ class WayPayService {
       }
 }
 
-export default new WayPayService();
+export default new PaymentMethodService();

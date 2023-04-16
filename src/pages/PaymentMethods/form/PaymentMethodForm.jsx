@@ -7,23 +7,23 @@ import { Toast } from 'primereact/toast';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AppBreadcrumb from '../../../components/_pesitos/AppBreadcrumb';
-import WayPayService from '../../../services/waypayes/WayPayService';
+import PaymentMethodService from '../../../services/PaymentMethods/PaymentMethodService';
 
-export const WayPayForm = () => {
+export const PaymentMethodForm = () => {
     const toast = useRef();
     const navigate = useNavigate();
-    const { wayPayId } = useParams();
+    const { paymentMethodId } = useParams();
 
-    const [wayPay, setWayPay] = useState(null);
+    const [paymentMethod, setPaymentMethod] = useState(null);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
 
 
     useEffect(() => {
-        const fetchWayPay = async () => {
+        const fetchPaymentMethods = async () => {
           try {
-            const {data:response} = await WayPayService.getWayPay(wayPayId);
-            setWayPay(response.data);
+            const {data:response} = await PaymentMethodService.getPaymentMethod(paymentMethodId);
+            setPaymentMethod(response.data);
             setName(response.data.name);
             setDescription(response.data.description || '');
           } catch (error) {
@@ -31,10 +31,10 @@ export const WayPayForm = () => {
           }
         };
     
-        if (wayPayId) {
-          fetchWayPay();
+        if (paymentMethodId) {
+          fetchPaymentMethods();
         }
-      }, [wayPayId]);
+      }, [paymentMethodId]);
 
 
     const handleSubmit = async (event) => {
@@ -57,8 +57,8 @@ export const WayPayForm = () => {
 
         try {
             let response;
-            if (wayPay) {
-                response = await WayPayService.updateWayPay(wayPay.id, data);
+            if (paymentMethod) {
+                response = await PaymentMethodService.updatePaymentMethod(paymentMethod.id, data);
                 toast.current.show({
                     severity: 'success',
                     summary: 'Exito',
@@ -66,7 +66,7 @@ export const WayPayForm = () => {
                     life: 3000,
                 });
             } else {
-                response = await WayPayService.createWayPay(data);
+                response = await PaymentMethodService.createPaymentMethod(data);
                 toast.current.show({
                     severity: 'success',
                     summary: 'Exito',
@@ -82,17 +82,21 @@ export const WayPayForm = () => {
         }
     };
 
+    const goBackPaymentMethodList = () => {
+        navigate('/paymentMethods');
+      };
+
     return (
         <div>
-            {wayPayId ?
+            {paymentMethodId ?
             <AppBreadcrumb meta={'Formas de pagos / Editar'} /> : <AppBreadcrumb meta={'Formas de pagos / Nuevo'} />}
             <div className="layout-content">
 
-            <Toast ref={toast} onHide={() => navigate('/waypayes')} />
+            <Toast ref={toast} onHide={() => navigate('/paymentMethods')} />
             <div className="grid">
                 <div className="col-12">
                     <div className="card">
-                        <h5>{wayPayId ? 'Editar forma de pago' : 'Nueva forma de pago'}</h5>
+                        <h5>{paymentMethodId ? 'Editar forma de pago' : 'Nueva forma de pago'}</h5>
                         <form onSubmit={handleSubmit}>
                             <div className="card p-fluid">
                                 <div className="field">
@@ -118,14 +122,18 @@ export const WayPayForm = () => {
                             <div className="flex justify-content-end mt-2">
                                 <div className="p-d-flex">
                                     <Button
-                                        label="Cancelar"
-                                        className="p-button-raised p-button-warning mr-2 mb-2"
+                                        label="Volver"
+                                        icon="pi pi-arrow-circle-left"
+                                        className="p-button-raised p-button-secondary mr-2 mb-2"
+                                        onClick={goBackPaymentMethodList}
+
                                     />
                                 </div>
                                 <div className="p-d-flex">
                                     <Button
                                         type="submit"
-                                        label={wayPay ? 'Actualizar' : 'Guardar'}
+                                        label={paymentMethod ? 'Actualizar' : 'Guardar'}
+                                        icon="pi pi-save"
                                         className="p-button-raised p-button-success"
                                     />
                                 </div>
@@ -139,4 +147,4 @@ export const WayPayForm = () => {
     );
 };
 
-export default WayPayForm;
+export default PaymentMethodForm;
