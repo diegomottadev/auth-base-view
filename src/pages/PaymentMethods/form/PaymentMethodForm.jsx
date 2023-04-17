@@ -126,7 +126,6 @@ export const PaymentMethodForm = () => {
                                         icon="pi pi-arrow-circle-left"
                                         className="p-button-raised p-button-secondary mr-2 mb-2"
                                         onClick={goBackPaymentMethodList}
-
                                     />
                                 </div>
                                 <div className="p-d-flex">

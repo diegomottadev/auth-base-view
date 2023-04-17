@@ -70,10 +70,10 @@ export const PaymentMethodList = () => {
     const onDeleteWayPay = (methodPaymentId) => {
         Swal.fire({
             title: '',
-            text: 'Confirma eliminar la forma de permanentemente',
+            text: '¿Confirma eliminar la forma de pago permanentemente?',
             showCancelButton: true,
-            confirmButtonText: 'Aceptar',
-            denyButtonText: `Cancelar`,
+            confirmButtonText: `<i class="pi pi-check-circle"></i> Aceptar`,
+            cancelButtonText: `<i class="pi pi-ban"></i> Cancelar`,
             confirmButtonColor: '#2196F3',
             cancelButtonColor: '#fbc02d',
           }).then( async(result) => {

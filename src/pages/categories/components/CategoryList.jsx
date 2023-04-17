@@ -68,10 +68,10 @@ const CategoryList = () => {
     const onDeleteCategory = (categoryId) => {
         Swal.fire({
             title: '',
-            text: 'Confirma eliminar la categoria permanentemente',
+            text: '¿Confirma eliminar la categoria permanentemente?',
             showCancelButton: true,
-            confirmButtonText: 'Aceptar',
-            denyButtonText: `Cancelar`,
+            confirmButtonText: `<i class="pi pi-check-circle"></i> Aceptar`,
+            cancelButtonText: `<i class="pi pi-ban"></i> Cancelar`,
             confirmButtonColor: '#2196F3',
             cancelButtonColor: '#fbc02d',
           }).then( async(result) => {
