@@ -38,6 +38,8 @@ import Category from './pages/categories/Category';
 import CategoryForm from './pages/categories/forms/CategoryForm';
 import PaymentMethod from './pages/PaymentMethods/PaymentMethod';
 import PaymentMethodForm from './pages/PaymentMethods/form/PaymentMethodForm';
+import Movement from './pages/movements/Movement';
+import MovementForm from './pages/movements/form/MovementForm';
 
 
 
@@ -376,13 +378,15 @@ const App = () => {
      */}
                         <Routes>
                             <Route exact path="/" element={<Dashboard />} />
-                            <Route path="/movements" element={<FormLayoutDemo />} />
+                            <Route path="/movements" element={<Movement />} />
                             <Route path="/categories" element={<Category />} />
                             <Route path="/paymentMethods" element={<PaymentMethod />} />
                             <Route exact path="/categories/new" element={<CategoryForm />}  />
                             <Route path="/categories/:categoryId/edit" element={<CategoryForm />} />
                             <Route exact path="/paymentMethods/new" element={<PaymentMethodForm/>}  />
                             <Route path="/paymentMethods/:paymentMethodId/edit" element={<PaymentMethodForm />} />
+                            <Route exact path="/movements/new" element={<MovementForm/>}  />
+                            <Route path="/movements/:paymentMethodId/edit" element={<MovementForm />} />
                         </Routes>
     
                     <AppFooter />
