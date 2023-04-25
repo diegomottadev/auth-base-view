@@ -25,13 +25,20 @@ class TypeBillService {
     };
 
     allTypeBills = async (params) => {
-        // mandar el parametro page si viene del formulario de movimientos
         let url = `${TYPE_BILL_BASE_URL}`;
-        // if(params.search!==null){
-        //     let keys = Object.keys(params.search);
-        //     url = `${TYPE_BILL_BASE_URL}?page=${1}&${keys[0]}=${params.search.name}`;
-        // }
-        return await axios.get(url);
+        
+        if(params && params.search){
+            url = `${TYPE_BILL_BASE_URL}?page=${params.page+1}`;
+        }
+       
+       if(params && params.search!==null){
+           let keys = Object.keys(params.search);
+           url = `${TYPE_BILL_BASE_URL}?page=${1}&${keys[0]}=${params.search.name}`;
+       }    
+
+       return await axios.get(url);
+
+    
     }
 
     exportTypeBills= async (params) => {

@@ -9,9 +9,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AppBreadcrumb from '../../../components/_pesitos/AppBreadcrumb';
 import CaterogyService from '../../../services/categories/CaterogyService';
+import ClasificationService from '../../../services/clasifications/ClasificationService';
 import MovementService from '../../../services/movements/MovementService';
 import PaymentMethodService from '../../../services/PaymentMethods/PaymentMethodService';
-import TypeBillService from '../../../services/typeBills/TypeBillService';
 
 export const MovementForm = () => {
     const toast = useRef();
@@ -19,14 +19,14 @@ export const MovementForm = () => {
     const { movementId } = useParams();
 
 
-    const [typeBills, setTypeBills] = useState(null)
+    const [clasifications, setClasifications] = useState(null)
     const [categories, setCategories] = useState(null)
     const [methodPayments, setMethodPayments] = useState(null)
 
     const [movement, setMovement] = useState(null);
     const [amount, setAmount] = useState(0);
     const [description, setDescription] = useState('');
-    const [typebill, setTypeBill] = useState(null);
+    const [clasification, setClasification] = useState(null);
     const [paymentMethod, setPaymentMethod] = useState(null);
     const [category, setCategory] = useState(null);
 
@@ -36,7 +36,7 @@ export const MovementForm = () => {
             const {data:response} = await MovementService.getPaymentMethod(movementId);
             setMovement(response.data);
             setAmount(response.data.amount);
-            setTypeBill(response.data.typebill_id);
+            setClasification(response.data.clasification_id);
             setPaymentMethod(response.data.waypay_id);
             setCategory(response.data.category_id);
         } catch (error) {
@@ -51,51 +51,51 @@ export const MovementForm = () => {
 
 
       useEffect(() => {
-        const fetchTypeBills = async () => {
+        const fetchClasifications = async () => {
           try {
-            const {data:response} = await TypeBillService.allTypeBills();
-            setTypeBills(response.data);
+            const {data:response} = await ClasificationService.allClasifications();
+            setClasifications(response.data);
            
           } catch (error) {
             console.error(error);
           }
         };
     
-        fetchTypeBills();
+        fetchClasifications();
         
       }, []);
 
 
 
-      // useEffect(() => {
-      //   const fetchMethodPayments = async () => {
-      //     try {
-      //       const {data:response} = await PaymentMethodService.allPaymentMethods();
-      //       setMethodPayments(response.data);
+      useEffect(() => {
+        const fetchMethodPayments = async () => {
+          try {
+            const {data:response} = await PaymentMethodService.allPaymentMethods();
+            setMethodPayments(response.data);
            
-      //     } catch (error) {
-      //       console.error(error);
-      //     }
-      //   };
+          } catch (error) {
+            console.error(error);
+          }
+        };
     
-      //   fetchMethodPayments();
+        fetchMethodPayments();
         
-      // }, []);
+      }, []);
 
-      // useEffect(() => {
-      //   const fetchCategories = async () => {
-      //     try {
-      //       const {data:response} = await CaterogyService.allCategories();
-      //       setCategories(response.data);
+      useEffect(() => {
+        const fetchCategories = async () => {
+          try {
+            const {data:response} = await CaterogyService.allCategories();
+            setCategories(response.data);
            
-      //     } catch (error) {
-      //       console.error(error);
-      //     }
-      //   };
+          } catch (error) {
+            console.error(error);
+          }
+        };
     
-      //   fetchCategories();
+        fetchCategories();
         
-      // }, []);
+      }, []);
 
 
     const handleSubmit = async (event) => {
@@ -116,7 +116,7 @@ export const MovementForm = () => {
             description,
             category,
             paymentMethod,
-            typebill,
+            clasification,
         };
 
         try {
@@ -161,7 +161,7 @@ export const MovementForm = () => {
                     {/* user_id: user_id,
                     category_id: bill.category_id,
                     waypay_id: bill.waypay_id,
-                    typebill_id: bill.typebill_id,
+                    clasification_id: bill.clasification_id,
                     amount: bill.amount,
                     description: bill.description,
                     lastDate: new Date(), */}
@@ -187,9 +187,19 @@ export const MovementForm = () => {
                                     />
                                 </div>
                                 <div className='field'>
-                                    <label htmlFor="typeBill">Tipo de movimiento</label>
-                                    <Dropdown value={typebill} onChange={(e) => setTypeBill(e.value)} options={typeBills} optionLabel="name" placeholder="-- Seleccionar tipo de movimiento --" />
+                                    <label htmlFor="typeBill">Transacción</label>
+                                    <Dropdown value={clasification} onChange={(e) => setClasification(e.value)} options={clasifications} optionLabel="name" placeholder="-- Seleccionar tipo de movimiento --" />
                                 </div>
+                                
+                                <div className='field'>
+                                    <label htmlFor="category">Categorias</label>
+                                    <Dropdown value={category} onChange={(e) => setCategory(e.value)} options={categories} optionLabel="name" placeholder="-- Seleccionar categoría --" />
+                                </div>
+                                <div className='field'>
+                                    <label htmlFor="paymentMethod">Forma de pago</label>
+                                    <Dropdown value={paymentMethod} onChange={(e) => setPaymentMethod(e.value)} options={methodPayments} optionLabel="name" placeholder="-- Seleccionar forma de pago --" />
+                                </div>
+
                             </div>
 
                             <div className="flex justify-content-end mt-2">
