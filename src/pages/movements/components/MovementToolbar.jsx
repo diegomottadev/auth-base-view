@@ -17,7 +17,7 @@ const MovementToolbar = () => {
 
     const onExportToExcel = async () => {
         const url = await MovementService.exportMovements();
-        const filename = 'movements.xlsx'; // Nombre del archivo
+        const filename = 'movimientos.xlsx'; // Nombre del archivo
         saveAs(url, filename); // Guardar el archivo en una ubicación específica
     };
 

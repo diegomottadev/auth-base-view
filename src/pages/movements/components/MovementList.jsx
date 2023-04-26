@@ -57,6 +57,17 @@ export const MovementList = () => {
     }
 
     const onFilter = (e) => {
+
+        if (e.target.value.length <=3 ){
+            let _lazyParams = {  first: 0,
+                rows: 10,
+                page: 0,
+                pageSize: 10,
+                search: null };
+            setLazyParams(_lazyParams);
+            return
+        }
+
         const search = { search: { name: e.target.value } };
         let _lazyParams = { ...lazyParams, ...search };
         _lazyParams['first'] = 0;
@@ -71,7 +82,7 @@ export const MovementList = () => {
     const onDeleteMovement = (movementId) => {
         Swal.fire({
             title: '',
-            text: '¿Confirma eliminar la forma de pago permanentemente?',
+            text: '¿Confirma eliminar el movimiento permanentemente?',
             showCancelButton: true,
             confirmButtonText: `<i class="pi pi-check-circle"></i> Aceptar`,
             cancelButtonText: `<i class="pi pi-ban"></i> Cancelar`,

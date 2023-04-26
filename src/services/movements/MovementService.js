@@ -32,7 +32,7 @@ class MovementService {
             url = `${MOVEMENTS_API_BASE_URL}?page=${params.page+1}`;
         }
        
-       if(params && params.search!==null){
+       if(params && params.search!==null && params.search?.name !== null){
            let keys = Object.keys(params.search);
            url = `${MOVEMENTS_API_BASE_URL}?page=${1}&${keys[0]}=${params.search.name}`;
        }
