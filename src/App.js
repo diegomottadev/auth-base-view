@@ -378,15 +378,15 @@ const App = () => {
      */}
                         <Routes>
                             <Route exact path="/" element={<Dashboard />} />
-                            <Route path="/movements" element={<Movement />} />
-                            <Route path="/categories" element={<Category />} />
-                            <Route path="/paymentMethods" element={<PaymentMethod />} />
+                            <Route exact path="/movements" element={<Movement />} />
+                            <Route exact path="/categories" element={<Category />} />
+                            <Route exact path="/paymentMethods" element={<PaymentMethod />} />
                             <Route exact path="/categories/new" element={<CategoryForm />}  />
-                            <Route path="/categories/:categoryId/edit" element={<CategoryForm />} />
+                            <Route exact path="/categories/:categoryId/edit" element={<CategoryForm />} />
                             <Route exact path="/paymentMethods/new" element={<PaymentMethodForm/>}  />
-                            <Route path="/paymentMethods/:paymentMethodId/edit" element={<PaymentMethodForm />} />
+                            <Route exact path="/paymentMethods/:paymentMethodId/edit" element={<PaymentMethodForm />} />
                             <Route exact path="/movements/new" element={<MovementForm/>}  />
-                            <Route path="/movements/:paymentMethodId/edit" element={<MovementForm />} />
+                            <Route exact path="/movements/:movementId/edit" element={<MovementForm />} />
                         </Routes>
     
                     <AppFooter />

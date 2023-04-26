@@ -27,16 +27,21 @@ class CategoryService {
     allCategories = async (params) => {
 
         let url = `${CATEGORY_API_BASE_URL}`;
+
         
-        if(params && params.search){
-            url = `${CATEGORY_API_BASE_URL}?page=${params.page+1}`;
+        if(params && params.clasification_id !== null){
+            url = `${CATEGORY_API_BASE_URL}?clasification_id=${params.clasification_id}`;
+        }
+
+        if(params && params.page !== null && params.page !== undefined){
+            url = `${CATEGORY_API_BASE_URL}?page=${params.page+1}&pageSize=${10}`;
         }
        
-       if(params && params.search!==null){
+       if(params && params.search!==null && params.search!==undefined){
            let keys = Object.keys(params.search);
            url = `${CATEGORY_API_BASE_URL}?page=${1}&${keys[0]}=${params.search.name}`;
        }    
-
+       console.log(url)
        return await axios.get(url);
     }
 

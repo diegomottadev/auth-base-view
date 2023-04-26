@@ -25,13 +25,18 @@ class MovementService {
     };
 
     allMovements = async (params) => {
-        console.log(params.search)
-        let url = `${MOVEMENTS_API_BASE_URL}?page=${params.page+1}`;
-        // if(params.search!==null){
-        //     let keys = Object.keys(params.search);
-        //     url = `${MOVEMENTS_API_BASE_URL}?page=${1}&${keys[0]}=${params.search.name}`;
-        // }
-        return await axios.get(url);
+
+        let url = `${MOVEMENTS_API_BASE_URL}`
+        
+        if(params && params.page!==null){
+            url = `${MOVEMENTS_API_BASE_URL}?page=${params.page+1}`;
+        }
+       
+       if(params && params.search!==null){
+           let keys = Object.keys(params.search);
+           url = `${MOVEMENTS_API_BASE_URL}?page=${1}&${keys[0]}=${params.search.name}`;
+       }
+       return await axios.get(url);
     }
 
     exportMovements= async (params) => {

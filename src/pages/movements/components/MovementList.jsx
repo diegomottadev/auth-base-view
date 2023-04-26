@@ -25,6 +25,7 @@ export const MovementList = () => {
         first: 0,
         rows: 10,
         page: 0,
+        pageSize: 10,
         search: null
     });
 
