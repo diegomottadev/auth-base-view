@@ -40,6 +40,7 @@ import PaymentMethod from './pages/PaymentMethods/PaymentMethod';
 import PaymentMethodForm from './pages/PaymentMethods/form/PaymentMethodForm';
 import Movement from './pages/movements/Movement';
 import MovementForm from './pages/movements/form/MovementForm';
+import General from './pages/general/General';
 
 
 
@@ -377,7 +378,9 @@ const App = () => {
                     <AppBreadcrumb meta={meta} /> :'' }
      */}
                         <Routes>
-                            <Route exact path="/" element={<Dashboard />} />
+                            <Route exact path="/general" element={<Dashboard />} />
+                            <Route exact path="/" element={<General />} />
+
                             <Route exact path="/movements" element={<Movement />} />
                             <Route exact path="/categories" element={<Category />} />
                             <Route exact path="/paymentMethods" element={<PaymentMethod />} />

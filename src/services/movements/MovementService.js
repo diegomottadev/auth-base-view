@@ -2,6 +2,8 @@ import { BASE_URL } from "../../helpers/BaseUrl"
 import axios from 'axios';
 
 const MOVEMENTS_API_BASE_URL = `${BASE_URL}/bills`;
+const API_DOLAR = 'https://api.bluelytics.com.ar/v2/latest'
+
 
 class MovementService {
 
@@ -39,6 +41,21 @@ class MovementService {
        return await axios.get(url);
     }
 
+    allBillsIncomesTotalPerMonth = async (params) => {
+
+        let url = `${MOVEMENTS_API_BASE_URL}/allByMonth`
+        
+    //     if(params && params.page!==null){
+    //         url = `${MOVEMENTS_API_BASE_URL}?page=${params.page+1}`;
+    //     }
+       
+    //    if(params && params.search!==null && params.search?.name !== null){
+    //        let keys = Object.keys(params.search);
+    //        url = `${MOVEMENTS_API_BASE_URL}?page=${1}&${keys[0]}=${params.search.name}`;
+    //    }
+       return await axios.get(url);
+    }
+
     exportMovements= async (params) => {
 
         let url = `${MOVEMENTS_API_BASE_URL}/export`;
@@ -52,6 +69,16 @@ class MovementService {
         return urlObject;
 
       }
+
+
+      getDolar= async (params) => {
+
+        let url = `${API_DOLAR}`;
+        return await axios.get(url);
+
+      }
+
+    
 }
 
 export default new MovementService();
