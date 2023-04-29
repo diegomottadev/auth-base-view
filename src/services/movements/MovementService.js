@@ -45,9 +45,16 @@ class MovementService {
 
         let url = `${MOVEMENTS_API_BASE_URL}/allByMonth`
         
-    //     if(params && params.page!==null){
-    //         url = `${MOVEMENTS_API_BASE_URL}?page=${params.page+1}`;
-    //     }
+        if (Object.keys(params).length > 0) {
+            url += `?`;
+            const queryParams = [];
+            for (const key in params) {
+              if (params.hasOwnProperty(key)) {
+                queryParams.push(`${key}=${params[key]}`);
+              }
+            }
+            url += queryParams.join('&');
+        }
        
     //    if(params && params.search!==null && params.search?.name !== null){
     //        let keys = Object.keys(params.search);

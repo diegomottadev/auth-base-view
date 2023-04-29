@@ -1,50 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import MovementService from '../../../services/movements/MovementService';
 
-const TagGeneral = () => {
+
+const TagGeneral = ({ balance, totalIncomes, totalExpenses, incomes, expenses, savings, cards }) => {
+
 
 
     const [showError, setShowError] = useState(false);
-
-    const [incomes, setIncomes] = useState(null);
-    const [expenses, setExpenses] = useState(null);
-    const [cards, setCards] = useState(null);
-    const [savings, setSavings] = useState(null);
-    const [totalIncomes, setTotalIncomes] = useState(null);
-    const [totalExpenses, setTotalExpenses] = useState(null);
-    const [balance, setBalance] = useState(null);
-
-    const [dolarBlue, setDolarBlue] = useState(null)
     const [dolarOficial, setDolarOficial] = useState(null)
+    const [dolarBlue, setDolarBlue] = useState(null)
 
     useEffect(() => {
-        async  function loadLazyData () {
+        async function loadLazyData() {
 
             try {
-                
-                const {data:{blue,oficial}} =  await MovementService.getDolar()
+
+                const { data: { blue, oficial } } = await MovementService.getDolar()
                 setDolarBlue(blue)
                 setDolarOficial(oficial)
-                const {data:{data:{transformedResults:{general}}}} =  await MovementService.allBillsIncomesTotalPerMonth()
-                console.log(general)
-                setIncomes(general.incomes)
-                setExpenses(general.expenses)
-                setCards(general.cards)
-                setSavings(general.savings)
-                setTotalIncomes(general.total_incomes)
-                setTotalExpenses(general.total_bills)
-                setBalance(general.balance)
-               // });
-            } catch (err){
+
+                // });
+            } catch (err) {
                 console.log(err);
-                console.warn('Hubo un problema con la carga de estadisticas generales');
+                console.warn('Hubo un problema con la obtención de los valores del dolar');
                 setShowError(true);
-                
+
             }
-            
+
         }
         loadLazyData();
-    },[]) 
+    }, [])
 
 
 
@@ -121,7 +106,7 @@ const TagGeneral = () => {
                         </div>
                     </div>
                     <div className="col-12 lg:col-6 xl:col-3">
-                        <div className="overview-box views" style={{'backgroundColor':'#d32f2f'}}>
+                        <div className="overview-box views" style={{ 'backgroundColor': '#d32f2f' }}>
                             <i className="overview-icon pi pi-credit-card"></i>
                             <span className="overview-title">Tarjetas</span>
                             <i className="overview-arrow pi pi-chevron-circle-down"></i>
