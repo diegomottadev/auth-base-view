@@ -50,7 +50,9 @@ class MovementService {
             const queryParams = [];
             for (const key in params) {
               if (params.hasOwnProperty(key)) {
-                queryParams.push(`${key}=${params[key]}`);
+                if(params[key] !== null){
+                    queryParams.push(`${key}=${params[key]}`);
+                }
               }
             }
             url += queryParams.join('&');

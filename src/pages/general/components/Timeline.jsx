@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { Button } from 'primereact/button';
+import React from 'react';
 
-const Timeline = ({movements}) => {
-
-
-   
+const Timeline = ({movements,onLoadMoreMovents,loadingMoreMovements,onTotalMovements}) => {
 
 
 
     return (
 
         <div className="col-12 xl:col-12">
+         {movements && movements.length > 0  && 
+
         <div className="card card-w-title timeline">
             <h5>Movimientos de Mes </h5>
             <ul>
@@ -36,7 +36,13 @@ const Timeline = ({movements}) => {
                     })
                 }
             </ul>
+             {movements.length  != onTotalMovements &&
+              <div className='flex align-items-center justify-content-center '>
+               <Button label='Cargar mas' className="mr-2 mb-2" icon="pi pi-plus" loading={loadingMoreMovements} onClick={onLoadMoreMovents} />
+              </div>
+            }
         </div>
+         }
     </div>
     
     );
