@@ -59,19 +59,19 @@ const General = () => {
     const [dateEnd, setDateEnd] = useState(null);
     const [pageSize, setPageSize] = useState(10);
 
-  
+
     useEffect(() => {
         async function loadLazyData() {
             let params = {}
             try {
-                if(month){
+                if (month) {
                     const date = new Date(month);
                     const monthCharnged = date.getMonth() + 1
                     params.month = monthCharnged
                 }
 
-                const { data: { data: { movements, totalMovements,transformedResults: { general } } } } = await MovementService.allBillsIncomesTotalPerMonth(params)
-                
+                const { data: { data: { movements, totalMovements, transformedResults: { general } } } } = await MovementService.allBillsIncomesTotalPerMonth(params)
+
                 setIncomes(general?.incomes || null)
                 setExpenses(general?.expenses || null)
                 setCards(general?.cards || null)
@@ -79,7 +79,7 @@ const General = () => {
                 setTotalIncomes(general?.total_incomes || null)
                 setTotalExpenses(general?.total_bills || null)
                 setBalance(general?.balance || null)
-                setMovements(movements??null )
+                setMovements(movements ?? null)
                 setTotalMovements(totalMovements)
                 // });
             } catch (err) {
@@ -90,9 +90,9 @@ const General = () => {
             }
 
         }
-        if(month) loadLazyData();
+        if (month) loadLazyData();
 
-        
+
 
     }, [month])
 
@@ -100,7 +100,7 @@ const General = () => {
         async function loadLazyData() {
             let params = {}
             try {
-                if(dateInit &&  dateEnd){
+                if (dateInit && dateEnd) {
 
                     // Obtenemos los componentes de fecha y hora del objeto Date
                     const yearInit = dateInit.getFullYear();
@@ -111,7 +111,7 @@ const General = () => {
                     const formattedDateInit = `${yearInit}-${monthInit}-${dayInit} 00:00:00`;
 
                     params.dateInit = formattedDateInit
-                    
+
                     const yearEnd = dateEnd.getFullYear();
                     const monthEnd = (dateEnd.getMonth() + 1).toString().padStart(2, '0');
                     const dayEnd = dateEnd.getDate().toString().padStart(2, '0');
@@ -130,7 +130,7 @@ const General = () => {
                 setTotalIncomes(general?.total_incomes || null)
                 setTotalExpenses(general?.total_bills || null)
                 setBalance(general?.balance || null)
-                setMovements(movements??null )
+                setMovements(movements ?? null)
                 // });
             } catch (err) {
                 console.log(err);
@@ -143,13 +143,13 @@ const General = () => {
 
         loadLazyData();
 
-    }, [dateInit,dateEnd])
-    
+    }, [dateInit, dateEnd])
+
     useEffect(() => {
         async function loadLazyData() {
             let params = {}
             try {
-                if(dateCurrent){
+                if (dateCurrent) {
 
                     // Obtenemos los componentes de fecha y hora del objeto Date
                     const year = dateCurrent.getFullYear();
@@ -160,7 +160,7 @@ const General = () => {
                     const formattedDate = `${year}-${month}-${day} 00:00:00`;
 
                     params.dateCurrent = formattedDate
-                    
+
                 }
 
                 const { data: { data: { movements, transformedResults: { general } } } } = await MovementService.allBillsIncomesTotalPerMonth(params)
@@ -171,7 +171,7 @@ const General = () => {
                 setTotalIncomes(general?.total_incomes || null)
                 setTotalExpenses(general?.total_bills || null)
                 setBalance(general?.balance || null)
-                setMovements(movements??null )
+                setMovements(movements ?? null)
                 // });
             } catch (err) {
                 console.log(err);
@@ -182,9 +182,9 @@ const General = () => {
 
         }
 
-        if(dateCurrent)   loadLazyData();
+        if (dateCurrent) loadLazyData();
 
-      
+
 
     }, [dateCurrent])
 
@@ -194,7 +194,7 @@ const General = () => {
             let params = {}
             try {
 
-                if(dateCurrent){
+                if (dateCurrent) {
 
                     // Obtenemos los componentes de fecha y hora del objeto Date
                     const year = dateCurrent.getFullYear();
@@ -205,16 +205,16 @@ const General = () => {
                     const formattedDate = `${year}-${month}-${day} 00:00:00`;
 
                     params.dateCurrent = formattedDate
-                    
+
                 }
 
-                if(month){
+                if (month) {
                     const date = new Date(month);
                     const monthCharnged = date.getMonth() + 1
                     params.month = monthCharnged
                 }
 
-                if(dateInit &&  dateEnd){
+                if (dateInit && dateEnd) {
 
                     // Obtenemos los componentes de fecha y hora del objeto Date
                     const yearInit = dateInit.getFullYear();
@@ -225,7 +225,7 @@ const General = () => {
                     const formattedDateInit = `${yearInit}-${monthInit}-${dayInit} 00:00:00`;
 
                     params.dateInit = formattedDateInit
-                    
+
                     const yearEnd = dateEnd.getFullYear();
                     const monthEnd = (dateEnd.getMonth() + 1).toString().padStart(2, '0');
                     const dayEnd = dateEnd.getDate().toString().padStart(2, '0');
@@ -245,7 +245,7 @@ const General = () => {
                 setTotalIncomes(general?.total_incomes || null)
                 setTotalExpenses(general?.total_bills || null)
                 setBalance(general?.balance || null)
-                setMovements(movements??null )
+                setMovements(movements ?? null)
                 setLoadingMoreMovement(false)
 
                 // });
@@ -258,68 +258,65 @@ const General = () => {
 
         }
 
-        if(pageSize >= 20)   loadLazyData();      
+        if (pageSize >= 20) loadLazyData();
 
     }, [pageSize])
 
 
-    const onLoadMoreMovents = () =>{
-        setPageSize(pageSize+10)
+    const onLoadMoreMovents = () => {
+        setPageSize(pageSize + 10)
     }
 
     return (
         <div >
             <AppBreadcrumb meta={'General'} />
             <div className="layout-dashboard">
-                <div className="col-12">
+                <div className="col-12 m-t-0">
+                    <div className="card mb-0">
+                        <div className="p-fluid formgrid grid">
+                            <div className="col-12 lg:col-6 xl:col-3" >
+                                <span className="overview-title">Fecha</span>
+                                <Calendar value={dateCurrent} onChange={(e) => {
+                                    setDateCurrent(e.value)
+                                    setMonth(null)
+                                    setDateEnd(null)
+                                    setDateInit(null)
+                                }} dateFormat="dd/mm/yy" showIcon locale="es" />
+                            </div>
+                            <div className="col-12 lg:col-6 xl:col-3">
+                                <span className="overview-title">Mes</span>
+                                <Calendar value={month} onChange={(e) => {
+                                    setMonth(e.value)
+                                    setDateCurrent(null)
+                                    setDateEnd(null)
+                                    setDateInit(null)
+                                }}
+                                    view="month" dateFormat="mm/yy" showIcon locale="es" placeholder={formattedDateMonth} />
+                            </div>
 
-                    <div className="card">
-                        <div className="grid">
-                            <div className="p-fluid formgrid grid">
-                                <div className="field col-12 md:col-3" >
-                                    <label htmlFor="firstname2">Fecha</label>
-                                    <Calendar value={dateCurrent} onChange={(e) => {
-                                                                                        setDateCurrent(e.value)
-                                                                                        setMonth(null)
-                                                                                        setDateEnd(null)
-                                                                                        setDateInit(null)
-                                                                            }} dateFormat="dd/mm/yy" showIcon locale="es"  />
-                                </div>
-                                <div className="field col-12 md:col-3">
-                                    <label htmlFor="firstname2">Mes</label>
-                                    <Calendar value={month} onChange={(e) =>  {
-                                                                            setMonth(e.value)
-                                                                            setDateCurrent(null)
-                                                                            setDateEnd(null)
-                                                                            setDateInit(null)
-                                                                            }} 
-                                                                        view="month" dateFormat="mm/yy" showIcon locale="es" placeholder={formattedDateMonth}  />
-                                </div>
+                            <div className="col-12 lg:col-6 xl:col-3">
 
-                                <div className="field col-12 md:col-3">
-
-                                    <label htmlFor="firstname2">Desde</label>
-                                    <Calendar value={dateInit} onChange={(e) => {
-                                                                                setDateInit(e.value)
-                                                                                setMonth(null)
-                                                                                setDateCurrent(null)
-                                                                        }} dateFormat="dd/mm/yy" showIcon locale="es" placeholder='dd/mm/yy'/>
-                                </div>
-                                <div className="field col-12 md:col-3">
-                                    <label htmlFor="lastname2">Hasta</label>
-                                    <Calendar value={dateEnd} onChange={(e) => {
-                                                                                setDateEnd(e.value)
-                                                                                setMonth(null)
-                                                                                setDateCurrent(null)
-                                                                                }
-                                                                        } dateFormat="dd/mm/yy" showIcon locale="es" placeholder='dd/mm/yy'/>
-                                </div>
+                                <span className="overview-title">Desde</span>
+                                <Calendar value={dateInit} onChange={(e) => {
+                                    setDateInit(e.value)
+                                    setMonth(null)
+                                    setDateCurrent(null)
+                                }} dateFormat="dd/mm/yy" showIcon locale="es" placeholder='dd/mm/yy' />
+                            </div>
+                            <div className="col-12 lg:col-6 xl:col-3">
+                                <span className="overview-title">Hasta</span>
+                                <Calendar value={dateEnd} onChange={(e) => {
+                                    setDateEnd(e.value)
+                                    setMonth(null)
+                                    setDateCurrent(null)
+                                }
+                                } dateFormat="dd/mm/yy" showIcon locale="es" placeholder='dd/mm/yy' />
                             </div>
                         </div>
                     </div>
                 </div>
-                <TagGeneral balance={balance} totalIncomes={totalIncomes} totalExpenses={totalExpenses} incomes={incomes} expenses={expenses} savings={savings} cards={cards} />
-                <Timeline movements={movements}  onLoadMoreMovents={onLoadMoreMovents} loadingMoreMovements={loadingMoreMovements} onTotalMovements={totalMovements}/>
+                <TagGeneral  balance={balance} totalIncomes={totalIncomes} totalExpenses={totalExpenses} incomes={incomes} expenses={expenses} savings={savings} cards={cards} />
+                <Timeline movements={movements} onLoadMoreMovents={onLoadMoreMovents} loadingMoreMovements={loadingMoreMovements} onTotalMovements={totalMovements} />
             </div>
         </div>
 
