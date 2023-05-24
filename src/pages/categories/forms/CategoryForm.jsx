@@ -1,6 +1,7 @@
 
 
 import { Button } from 'primereact/button';
+import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Toast } from 'primereact/toast';
@@ -8,16 +9,38 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AppBreadcrumb from '../../../components/_pesitos/AppBreadcrumb';
 import CategoryService from '../../../services/categories/CaterogyService';
+import ClasificationService from '../../../services/clasifications/ClasificationService';
 
 const CategoryForm = () => {
     const toast = useRef();
     const navigate = useNavigate();
     const { categoryId } = useParams();
+    const [clasification, setClasification] = useState(null);
+    const [clasifications, setClasifications] = useState(null);
 
     const [category, setCategory] = useState(null);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
 
+    const [clasificationValid, setClasificationValid] = useState(true);
+    const [nameValid, setNameValid] = useState(true);
+
+
+
+    useEffect(() => {
+        const fetchClasifications = async () => {
+          try {
+            const { data: response } = await ClasificationService.allClasifications();
+            setClasifications(response.data);
+    
+          } catch (error) {
+            console.error(error);
+          }
+        };
+    
+        fetchClasifications();
+    
+      }, []);
 
     useEffect(() => {
         const fetchCategory = async () => {
@@ -26,6 +49,7 @@ const CategoryForm = () => {
             setCategory(response.data);
             setName(response.data.name);
             setDescription(response.data.description || '');
+            setClasification(response.data.clasification_id)
           } catch (error) {
             console.error(error);
           }
@@ -40,7 +64,25 @@ const CategoryForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (!name ) {
+
+        let isValid = true;
+
+        if (!clasification) {
+          setClasificationValid(false);
+          isValid = false;
+        } else {
+          setClasificationValid(true);
+        }
+    
+        if (!name) {
+          setNameValid(false);
+          isValid = false;
+        } else {
+          setNameValid(true);
+        }
+
+
+        if (!isValid) {
             toast.current.show({
                 severity: 'error',
                 summary: 'Error',
@@ -53,6 +95,7 @@ const CategoryForm = () => {
         const data = {
             name,
             description,
+            clasification
         };
 
         try {
@@ -76,6 +119,7 @@ const CategoryForm = () => {
             }
             setName('');
             setDescription('');
+            setClasification(null);
 
         } catch (error) {
             console.error(error);
@@ -92,13 +136,26 @@ const CategoryForm = () => {
             {categoryId ? <AppBreadcrumb meta={'Categorías / Editar'} /> : <AppBreadcrumb meta={'Categorías / Nuevo'} />}
             <div className="layout-content">
 
-            <Toast ref={toast} onHide={() => navigate('/categories')} />
+            <Toast ref={toast} onHide={() =>{
+                 if (clasificationValid  &&  nameValid) {
+                    navigate('/categories')
+                 }
+                } 
+                 }/>
             <div className="grid">
                 <div className="col-12">
                     <div className="card">
                         <h5>{categoryId ? 'Editar categoría' : 'Nueva categoría'}</h5>
                         <form onSubmit={handleSubmit}>
                             <div className="card p-fluid">
+                                <div className='field'>
+                                <div className='field'>
+                                    <label htmlFor="clasification">Clasification</label>
+                                        <Dropdown value={clasification} optionValue="id" onChange={(e) => setClasification(e.value)} options={clasifications} optionLabel="name" placeholder="-- Seleccionar clasificación --" 
+                                         className={!clasificationValid ? 'p-invalid' : ''}
+                                        />
+                                    </div>
+                                </div>
                                 <div className="field">
                                     <label htmlFor="name">Nombre</label>
                                     <InputText
@@ -106,6 +163,7 @@ const CategoryForm = () => {
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
+                                        className={!nameValid ? 'p-invalid' : ''}
                                     />
                                 </div>
                                 <div className="field">

@@ -41,6 +41,7 @@ import PaymentMethodForm from './pages/PaymentMethods/form/PaymentMethodForm';
 import Movement from './pages/movements/Movement';
 import MovementForm from './pages/movements/form/MovementForm';
 import General from './pages/general/General';
+import { MovementByClasification } from './pages/general/form/MovementByClasification';
 
 
 
@@ -97,7 +98,7 @@ const App = () => {
 
     const menu = [
         {
-            label: 'Home Page',
+            label: 'Panel de control',
             icon: 'pi pi-fw pi-home',
             items: [{ label: 'General', icon: 'pi pi-fw pi-home', to: '/' }]
         },
@@ -390,6 +391,8 @@ const App = () => {
                             <Route exact path="/paymentMethods/:paymentMethodId/edit" element={<PaymentMethodForm />} />
                             <Route exact path="/movements/new" element={<MovementForm/>}  />
                             <Route exact path="/movements/:movementId/edit" element={<MovementForm />} />
+                            <Route exact path="/movements/:clasificationId/clasification/new" element={<MovementByClasification />} />
+
                         </Routes>
     
                     <AppFooter />

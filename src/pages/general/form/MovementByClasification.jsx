@@ -13,60 +13,59 @@ import ClasificationService from '../../../services/clasifications/Clasification
 import MovementService from '../../../services/movements/MovementService';
 import PaymentMethodService from '../../../services/PaymentMethods/PaymentMethodService';
 
-export const MovementForm = () => {
+export const MovementByClasification = () => {
   const toast = useRef();
   const navigate = useNavigate();
-  const { movementId } = useParams();
+  const { clasificationId } = useParams();
 
 
-  const [clasifications, setClasifications] = useState(null)
+  const [clasification, setClasification] = useState(null)
   const [categories, setCategories] = useState(null)
   const [methodPayments, setMethodPayments] = useState(null)
 
   const [movement, setMovement] = useState(null);
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
-  const [clasification, setClasification] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [category, setCategory] = useState(null);
   const [typeBill, setTypeBill] = useState(null);
 
+//   useEffect(() => {
+//     const fetchMovement = async () => {
+//       try {
+//         await MovementService.getMovement(movementId).then(({ data: { data: data } }) => {
+//           setMovement(data);
+//           setAmount(data.amount);
+//           setClasification(data.clasification.id);
+//           setPaymentMethod(data.waypay.id);
+//           setCategory(data.category.id);
+//           setDescription(data.description)
+//           setTypeBill(data.typebill?.id)
+//         });
+
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     };
+
+//     if (movementId) {
+//       fetchMovement();
+//     }
+//   }, [movementId]);
+
+
   useEffect(() => {
-    const fetchMovement = async () => {
+    const fetchClasification = async () => {
       try {
-        await MovementService.getMovement(movementId).then(({ data: { data: data } }) => {
-          setMovement(data);
-          setAmount(data.amount);
-          setClasification(data.clasification.id);
-          setPaymentMethod(data.waypay.id);
-          setCategory(data.category.id);
-          setDescription(data.description)
-          setTypeBill(data.typebill?.id)
-        });
+        const { data: response } = await ClasificationService.getClasification(clasificationId);
+        setClasification(response.data);
 
       } catch (error) {
         console.error(error);
       }
     };
 
-    if (movementId) {
-      fetchMovement();
-    }
-  }, [movementId]);
-
-
-  useEffect(() => {
-    const fetchClasifications = async () => {
-      try {
-        const { data: response } = await ClasificationService.allClasifications();
-        setClasifications(response.data);
-
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchClasifications();
+    fetchClasification();
 
   }, []);
 
@@ -89,10 +88,10 @@ export const MovementForm = () => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const params = { clasification_id: clasification }
+      const params = { clasification_id: clasificationId }
       try {
 
-        const { data: {data:clasificationResponse} }  = await ClasificationService.getClasification(clasification);
+        const { data: {data:clasificationResponse} }  = await ClasificationService.getClasification(clasificationId);
         setTypeBill(clasificationResponse.typebill_id);
 
         const { data: response } = await CaterogyService.allCategories(params);
@@ -102,12 +101,12 @@ export const MovementForm = () => {
         console.error(error);
       }
     };
-    if (clasification) {
-      fetchCategories();
-    }
+      
+    fetchCategories();
+    
 
 
-  }, [clasification]);
+  }, []);
 
 
   const handleSubmit = async (event) => {
@@ -128,7 +127,7 @@ export const MovementForm = () => {
       description: description,
       category_id: category,
       paymentMethod_id: paymentMethod,
-      clasification_id: clasification ,
+      clasification_id: parseInt(clasificationId) ,
       typebill_id: typeBill
     };
 
@@ -157,17 +156,21 @@ export const MovementForm = () => {
     }
   };
 
-  const goBackPaymentMethodList = () => {
-    navigate('/movements');
+  const goBackHome = () => {
+    navigate('/');
   };
+
+  if(!clasification){
+    return <div>...cargando...</div>
+  }
 
   return (
     <div>
-      {movementId ?
-        <AppBreadcrumb meta={'Movimientos / Editar'} /> : <AppBreadcrumb meta={'Movimientos / Nuevo'} />}
+      {clasificationId && clasification ?
+        <AppBreadcrumb meta={`${clasification.name} / Editar`} /> : <AppBreadcrumb meta={`${clasification.name} / Nuevo`} />}
       <div className="layout-content">
 
-        <Toast ref={toast} onHide={() => navigate('/movements')} />
+        <Toast ref={toast} onHide={() => navigate('/')} />
         <div className="grid">
           <div className="col-12">
             <div className="card">
@@ -178,7 +181,7 @@ export const MovementForm = () => {
                     amount: bill.amount,
                     description: bill.description,
                     lastDate: new Date(), */}
-              <h5>{movementId ? 'Editar movimiento' : 'Nuevo movimiento'}</h5>
+              <h5>{clasificationId ? `Editar ${clasification.name}` : `Nuevo  ${clasification.name}`}</h5>
               <form onSubmit={handleSubmit}>
                 <div className="card p-fluid">
                   <div className="field">
@@ -210,10 +213,10 @@ export const MovementForm = () => {
                     />
                   </div>
 
-                  <div className='field'>
+                  {/* <div className='field'>
                     <label htmlFor="typeBill">Transacción</label>
                     <Dropdown value={clasification} optionValue="id" onChange={(e) => setClasification(e.value)} options={clasifications} optionLabel="name" placeholder="-- Seleccionar tipo de movimiento --" />
-                  </div>
+                  </div> */}
                                 
                   <div className='field'>
                     <label htmlFor="category">Categorias</label>
@@ -232,7 +235,7 @@ export const MovementForm = () => {
                       label="Volver"
                       icon="pi pi-arrow-circle-left"
                       className="p-button-raised p-button-secondary mr-2 mb-2"
-                      onClick={goBackPaymentMethodList}
+                      onClick={goBackHome}
                     />
                   </div>
                   <div className="p-d-flex">
@@ -253,4 +256,4 @@ export const MovementForm = () => {
   );
 };
 
-export default MovementForm;
+export default MovementByClasification;

@@ -11,7 +11,6 @@ const Timeline = ({movements,onLoadMoreMovents,loadingMoreMovements,onTotalMovem
          {movements && movements.length > 0  && 
 
         <div className="card card-w-title timeline">
-            <h5>Movimientos de Mes </h5>
             <ul>
                 {movements && 
                     movements.map((movement, index) => {

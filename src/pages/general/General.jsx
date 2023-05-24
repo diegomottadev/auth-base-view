@@ -15,7 +15,11 @@ const General = () => {
     const yearEnd = (new Date()).getFullYear()
     const monthEnd = ((new Date()).getMonth() + 1).toString().padStart(2, '0');
     const formattedDateMonth = `${monthEnd}/${yearEnd}`;
-    // Formateamos los componentes en la cadena de fecha y hora deseada
+
+    const yearCurrentInit = (new Date()).getFullYear();
+    const monthCurrentInit = ((new Date()).getMonth() + 1).toString().padStart(2, '0');
+    const dayCurrentInit = (new Date()).getDate().toString().padStart(2, '0');
+    const formattedDateCurrent = `${dayCurrentInit}/${monthCurrentInit}/${yearCurrentInit}`;
 
 
 
@@ -27,6 +31,7 @@ const General = () => {
 
     const [cards, setCards] = useState(null);
     const [savings, setSavings] = useState(null);
+    const [dollars, setDollars] = useState(null);
     const [totalIncomes, setTotalIncomes] = useState(null);
     const [totalExpenses, setTotalExpenses] = useState(null);
     const [balance, setBalance] = useState(null);
@@ -46,8 +51,8 @@ const General = () => {
         clear: 'Limpiar'
     });
 
-    const [dateCurrent, setDateCurrent] = useState(new Date());
-    const [month, setMonth] = useState(null);
+    const [dateCurrent, setDateCurrent] = useState(null);
+    const [month, setMonth] = useState(new Date());
     // const [dateInit, setDateInit] = useState(new Date());
     // const [dateEnd, setDateEnd] = useState(() => {
     //     const d = new Date(dateInit);
@@ -76,6 +81,7 @@ const General = () => {
                 setExpenses(general?.expenses || null)
                 setCards(general?.cards || null)
                 setSavings(general?.savings || null)
+                setDollars(general?.dollars || null)
                 setTotalIncomes(general?.total_incomes || null)
                 setTotalExpenses(general?.total_bills || null)
                 setBalance(general?.balance || null)
@@ -127,6 +133,7 @@ const General = () => {
                 setExpenses(general?.expenses || null)
                 setCards(general?.cards || null)
                 setSavings(general?.savings || null)
+                setDollars(general?.dollars || null)
                 setTotalIncomes(general?.total_incomes || null)
                 setTotalExpenses(general?.total_bills || null)
                 setBalance(general?.balance || null)
@@ -168,10 +175,12 @@ const General = () => {
                 setExpenses(general?.expenses || null)
                 setCards(general?.cards || null)
                 setSavings(general?.savings || null)
+                setDollars(general?.dollars || null)
                 setTotalIncomes(general?.total_incomes || null)
                 setTotalExpenses(general?.total_bills || null)
                 setBalance(general?.balance || null)
                 setMovements(movements ?? null)
+
                 // });
             } catch (err) {
                 console.log(err);
@@ -234,6 +243,7 @@ const General = () => {
                     const formattedDateEnd = `${yearEnd}-${monthEnd}-${dayEnd} 00:00:00`;
 
                     params.dateEnd = formattedDateEnd
+
                 }
                 params.pageSize = pageSize
                 setLoadingMoreMovement(true)
@@ -281,7 +291,7 @@ const General = () => {
                                     setMonth(null)
                                     setDateEnd(null)
                                     setDateInit(null)
-                                }} dateFormat="dd/mm/yy" showIcon locale="es" />
+                                }} dateFormat="dd/mm/yy" showIcon locale="es" placeholder={formattedDateCurrent}/>
                             </div>
                             <div className="col-12 lg:col-6 xl:col-3">
                                 <span className="overview-title">Mes</span>
@@ -315,7 +325,7 @@ const General = () => {
                         </div>
                     </div>
                 </div>
-                <TagGeneral  balance={balance} totalIncomes={totalIncomes} totalExpenses={totalExpenses} incomes={incomes} expenses={expenses} savings={savings} cards={cards} />
+                <TagGeneral onDateCurrent={dateCurrent} onDateFormatInit={dateInit} onDateFormatEnd={dateEnd}  onMonth={month} balance={balance} totalIncomes={totalIncomes} totalExpenses={totalExpenses} incomes={incomes} expenses={expenses} savings={savings} cards={cards} dollars={dollars} />
                 <Timeline movements={movements} onLoadMoreMovents={onLoadMoreMovents} loadingMoreMovements={loadingMoreMovements} onTotalMovements={totalMovements} />
             </div>
         </div>
