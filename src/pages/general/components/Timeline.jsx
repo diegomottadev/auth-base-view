@@ -17,9 +17,9 @@ const Timeline = ({movements,onLoadMoreMovents,loadingMoreMovements,onTotalMovem
                         return (
                             <li key={movement.id}>
                                 <div className="activity-link"></div>
-                                <div className="timeline-icon">
+                                {/* <div className="timeline-icon">
                                     <i className="pi pi-globe"></i>
-                                </div>
+                                </div> */}
                                 <div className="timeline-content">
                                     <h5>$ {movement.amount}</h5>
                                     <h3>{movement.clasification.name}</h3>
