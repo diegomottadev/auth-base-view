@@ -5,7 +5,6 @@ import { Access } from './pages/Access';
 import { Error } from './pages/Error';
 import { Login } from './pages/Login';
 import { NotFound } from './pages/NotFound';
-import { Wizard } from './pages/Wizard';
 
 const AppWrapper = () => {
     let location = useLocation();
@@ -20,7 +19,6 @@ const AppWrapper = () => {
             <Route path="/error" element={<Error />} />
             <Route path="/notfound" element={<NotFound />} />
             <Route path="/access" element={<Access />} />
-            <Route path="/wizard" element={<Wizard />} />
             <Route path="*" element={<App />} />
         </Routes>
     );

@@ -34,7 +34,7 @@ export const MovementList = () => {
 
             try {
                 setLoadingDatatable(true);
-                const {data:{data:result, total:total}} =  await MovementService.allMovements(lazyParams)
+                const {data:{data:result, total}} =  await MovementService.allMovements(lazyParams)
                 setTotalRecords(total);
                 setMovements(result);
                 setLoadingDatatable(false);
@@ -117,10 +117,9 @@ export const MovementList = () => {
 
     const actionBodyTemplate = (rowData) => {
         return (
-            <div className="actions">
+            <div className="actions" style={{'display':'flex'}}>
                 <Button tooltip={"Editar"}  tooltipOptions={{ position: 'top' }} icon="pi pi-pencil" className="p-button-raised p-button-success p-mr-2" onClick={() => onEditMovement(rowData.id)} />
                 <Button tooltip={"Eliminar"}  tooltipOptions={{ position: 'top' }} icon="pi pi-trash" className="p-button-raised p-button-danger p-mr-2" onClick={() => onDeleteMovement(rowData.id)} />
-
                 {/* <Button icon="pi pi-trash" className="p-button-rounded p-button-warning" onClick={() => confirmDeleteTeacher(rowData)} /> */}
             </div>
         );

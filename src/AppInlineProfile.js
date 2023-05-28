@@ -3,6 +3,7 @@ import { classNames } from 'primereact/utils';
 import { CSSTransition } from 'react-transition-group';
 
 const AppInlineProfile = (props) => {
+    const {onUser} = props 
     const menuRef = useRef(null);
     const profileClassName = classNames('layout-profile', { 'layout-profile-active': props.inlineMenuActive });
     const menuitemLinkTabindex = !props.inlineMenuActive ? '-1' : null;
@@ -10,10 +11,10 @@ const AppInlineProfile = (props) => {
     return (
         <div className={profileClassName}>
             <button type="button" onClick={props.onProfileButtonClick} className="p-link layout-profile-button">
-                <img src="assets/layout/images/avatar.png" alt="babylon-layout" />
+                <img src="assets/layout/images/icon-users.png" alt="babylon-layout" />
                 <div className="layout-profile-userinfo">
-                    <span className="layout-profile-name">Arlene Welch</span>
-                    <span className="layout-profile-role">Design Ops</span>
+                    <span className="layout-profile-name">{onUser?.name}</span>
+                    {/* <span className="layout-profile-role">Design Ops</span> */}
                 </div>
                 <i className="layout-profile-icon pi pi-angle-down"></i>
             </button>
@@ -22,25 +23,25 @@ const AppInlineProfile = (props) => {
                     <li role="menuitem">
                         <button type="button" className="p-link" tabIndex={menuitemLinkTabindex}>
                             <i className="pi pi-user"></i>
-                            <span>Profile</span>
+                            <span>Perfil</span>
                         </button>
                     </li>
                     <li role="menuitem">
                         <button type="button" className="p-link" tabIndex={menuitemLinkTabindex}>
                             <i className="pi pi-cog"></i>
-                            <span>Settings</span>
+                            <span>Configuración</span>
                         </button>
                     </li>
-                    <li role="menuitem">
+                    {/* <li role="menuitem">
                         <button type="button" className="p-link" tabIndex={menuitemLinkTabindex}>
                             <i className="pi pi-envelope"></i>
-                            <span>Messages</span>
+                            <span>Mensajes</span>
                         </button>
-                    </li>
+                    </li> */}
                     <li role="menuitem">
                         <button type="button" className="p-link" tabIndex={menuitemLinkTabindex}>
                             <i className="pi pi-bell"></i>
-                            <span>Notifications</span>
+                            <span>Notificaciones</span>
                         </button>
                     </li>
                 </ul>

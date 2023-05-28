@@ -1,18 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { classNames } from 'primereact/utils';
-import { BrowserRouter as Router ,Route, Routes, useNavigate, useLocation } from 'react-router-dom';
+import {Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 
 import AppTopbarP from './AppTopbarP';
 import AppFooter from './AppFooter';
 import AppConfig from './AppConfig';
 import AppMenu from './AppMenu';
-import AppBreadcrumb from './AppBreadcrumb';
 import AppInlineProfile from './AppInlineProfile';
-
-import Dashboard from './components/Dashboard';
-import FormLayoutDemo from './components/FormLayoutDemo';
-import InputDemo from './components/InputDemo';
-import FloatLabelDemo from './components/FloatLabelDemo';
 import PrimeReact from 'primereact/api';
 import { Tooltip } from 'primereact/tooltip';
 
@@ -26,13 +20,8 @@ import './App.scss';
  */
 
 import {  initAxiosInterceptors } from './helpers/auth-helpers';
-import Axios from 'axios';
-import { BASE_URL } from './helpers/BaseUrl';
 import { Login } from './pages/Login';
-import Loading from './components/Loading';
-import Error from './components/Error';
 import useToken from './hooks/useToken';
-import AxiosInterceptors from './components/_pesitos/AxiosInterceptors';
 import { me } from './services/auth/Authorization';
 import Category from './pages/categories/Category';
 import CategoryForm from './pages/categories/forms/CategoryForm';
@@ -69,6 +58,8 @@ const App = () => {
     */
 
     const [menuActive, setMenuActive] = useState(false);
+    const [topbarMenuActive, setTopbarMenuActive] = useState(false);
+
     const [menuMode, setMenuMode] = useState('static');
     const [darkMenu, setDarkMenu] = useState(true);
     const [overlayMenuActive, setOverlayMenuActive] = useState(false);
@@ -113,12 +104,12 @@ const App = () => {
         },
       
         {
-            label: 'Documentación',
-            icon: 'pi pi-fw pi-download',
+            label: 'Ayuda',
+            icon: 'pi pi-fw pi-help',
             items: [
                 {
-                    label: 'Documentación',
-                    icon: 'pi pi-fw pi-file',
+                    label: 'Manual de usuario',
+                    icon: 'pi pi-fw pi-book',
                     to: '/documentation'
                 }
             ]
@@ -153,11 +144,6 @@ const App = () => {
         cargandoUsuario();
     }, [token])
 
-    function logout() {
-        setUsuario(null);
-        deleteToken();
-        window.location.href = `${window.location.protocol}//${window.location.host}/#/`;
-    }
 
     function mostrarError(mensaje) {
         //alert();
@@ -286,14 +272,24 @@ const App = () => {
         }
     };
 
-    const onTopbarMenuButtonClick = (event) => {
-        //topbarItemClick = true;
-        //setTopbarMenuActive((prevTopbarMenuActive) => !prevTopbarMenuActive);
+    // const onTopbarMenuButtonClick = (event) => {
+    //     //topbarItemClick = true;
+    //     //setTopbarMenuActive((prevTopbarMenuActive) => !prevTopbarMenuActive);
 
-        hideOverlayMenu();
+    //     hideOverlayMenu();
 
+    //     event.preventDefault();
+    // };
+    const onTopbarItemClick = (event, item) => {
+ 
+        deleteToken()
+        navigate(`/`);
         event.preventDefault();
-    };
+    };
+
+    const onTopbarMenuActive= ()=>{
+        setTopbarMenuActive(!topbarMenuActive)
+    }
 
     const onConfigClick = () => {
         configClick = true;
@@ -355,20 +351,26 @@ const App = () => {
         return (
             <div className={containerClassName} onClick={onDocumentClick}>
                 <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
+               
                 <AppTopbarP
-                 onMenuButtonClick={onMenuButtonClick}
-                 onTopbarMenuButtonClick={onTopbarMenuButtonClick}
-                />
+                topbarMenuActive={topbarMenuActive}
+                onMenuButtonClick={onMenuButtonClick}
+                onTopbarMenuButtonClick={onTopbarMenuActive}
+                onTopbarItemClick={onTopbarItemClick}
+                isHorizontal={isHorizontal()}
+                profileMode={profileMode}
+                isMobile={isMobile}
+            />
     
                 <div className={menuContainerClassName} onClick={onMenuClick}>
                     <div className="layout-menu-logo">
-                        <button className="p-link" onClick={() => navigate('/')}>
-                            <img id="layout-menu-logo" src="assets/layout/images/logo-white.png" library="babylon-layout" alt="babylon-logo" />
+                        <button className="p-link text-center" onClick={() => navigate('/')}>
+                            <img  id="layout-menu-logo" src="assets/layout/images/pesitos-sidebar.png" library="babylon-layout" alt="babylon-logo" />
                         </button>
                     </div>
                     <div className="layout-menu-wrapper">
                         <div className="menu-scroll-content">
-                            {hasInlineProfile && <AppInlineProfile inlineMenuActive={inlineMenuActive} onProfileButtonClick={onProfileButtonClick} />}
+                            {hasInlineProfile && <AppInlineProfile onUser={usuario} inlineMenuActive={inlineMenuActive} onProfileButtonClick={onProfileButtonClick} />}
                             <AppMenu model={menu} menuMode={menuMode} active={menuActive} onMenuitemClick={onMenuitemClick} onRootMenuitemClick={onRootMenuitemClick} />
                         </div>
                     </div>
@@ -377,11 +379,9 @@ const App = () => {
                 <div className="layout-main">
                     {/* {meta != undefined ? 
                     <AppBreadcrumb meta={meta} /> :'' }
-     */}
+                     */}
                         <Routes>
-                            <Route exact path="/general" element={<Dashboard />} />
                             <Route exact path="/" element={<General />} />
-
                             <Route exact path="/movements" element={<Movement />} />
                             <Route exact path="/categories" element={<Category />} />
                             <Route exact path="/paymentMethods" element={<PaymentMethod />} />
@@ -419,30 +419,14 @@ const App = () => {
         );
     }
 
-
     const  LogoutRoute = ({ mostrarError ,error }) =>{
         return (
-
- 
                     <Routes>
-
                         <Route path="/" element={<Login setToken={setToken} mostrarError={mostrarError} error={error}  />} />
-
-                        {/*ruta por default*/}
                     </Routes>
    
         );
     }
-    
-
-    // console.log(usuario);
-    // if(cargandoUsuario){
-    //     return(
-    //       <div>
-    //           <Loading/>
-    //       </div>
-    //     );
-    // }
 
     if(isExpired) return <div className="layout-main"><LogoutRoute mostrarError={mostrarError} error={error} /></div>
     

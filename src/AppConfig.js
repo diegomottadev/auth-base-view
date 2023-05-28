@@ -4,7 +4,7 @@ import { RadioButton } from 'primereact/radiobutton';
 import { InputSwitch } from 'primereact/inputswitch';
 
 const AppConfig = (props) => {
-    const [themeColor, setThemeColor] = useState('blue');
+    const [themeColor, setThemeColor] = useState('purple');
 
     const componentThemes = [
         { name: 'Amber Accent', file: 'amber', color: '#FFC107' },
@@ -43,11 +43,11 @@ const AppConfig = (props) => {
         let menuLogo = document.getElementById('layout-menu-logo');
 
         if (value.localeCompare('yellow') === 0 || value.localeCompare('lime') === 0) {
-            topbarLogo.src = 'assets/layout/images/logo-black.png';
-            menuLogo.src = 'assets/layout/images/logo-black.png';
+            topbarLogo.src = 'assets/layout/images/pesitos-logo-menu.png';
+            menuLogo.src = 'assets/layout/images/pesitos-logo-menu.png';
         } else {
-            topbarLogo.src = 'assets/layout/images/logo-white.png';
-            menuLogo.src = 'assets/layout/images/logo-white.png';
+            topbarLogo.src = 'assets/layout/images/pesitos-logo-menu.png';
+            menuLogo.src = 'assets/layout/images/pesitos-logo-menu.png';
         }
     };
 
@@ -86,11 +86,21 @@ const AppConfig = (props) => {
 
     const componentThemesElement = getComponentThemes();
     const configClassName = classNames('layout-config', { 'layout-config-active': props.configActive });
+    const onConfigButtonClick = (event) => {
+        props.onConfigButtonClick(event);
+        event.preventDefault();
+    };
+
+        // changeStyleSheetUrl('theme-css', themeColor, 'theme-');
+        // changeStyleSheetUrl('layout-css', themeColor, 'layout-');
+        // setThemeColor(themeColor);
+    
+
     return (
         <div id="layout-config">
             {/* <button type="button" id="layout-config-button" className="layout-config-button p-link" onClick={onConfigButtonClick}>
                 <i className="pi pi-cog"></i>
-            </button> */}
+            </button>  */}
             <div className={configClassName} onClick={props.onConfigClick}>
                 <h5>Menu Mode</h5>
                 <div className="field-radiobutton">

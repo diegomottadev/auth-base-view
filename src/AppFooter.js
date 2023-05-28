@@ -6,7 +6,7 @@ const AppFooter = () => {
             <div className="grid">
                 <div className="col-6">
                     <button type="button" className="p-link logo-container">
-                        <img src="assets/layout/images/logo-black.png" alt="babylon-layout" />
+                        <img src="assets/layout/images/pesitos-footer-black.png" alt="babylon-layout" />
                     </button>
                 </div>
                 <div className="col-6 footer-icons">

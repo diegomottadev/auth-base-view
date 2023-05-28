@@ -42,7 +42,7 @@ export const Login = ({mostrarError,error,setToken}) => {
             <div className="login-panel"></div>
 
             <div className="login-content">
-                <img src="assets/layout/images/logo-black.png" alt="babylon-layout" />
+                <img src="assets/layout/images/pesitos-login.png" alt="babylon-layout" />
 
                 <h1>
                     <span>Ingreso </span>a Pesitos
