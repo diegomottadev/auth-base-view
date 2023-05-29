@@ -18,3 +18,7 @@ To run "pesitos" on your computer, you'll need to install Node.js and a Node.js 
   3 - Run the application
   
     npm start
+
+  4 - Clone the backend project and follow the instructions in the following link
+
+    https://gitlab.com/diegomotta18/pesitos-back
