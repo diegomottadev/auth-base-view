@@ -5,7 +5,7 @@ Pesitosapp evaluates my expenses and financial goals, helping me save smartly. T
 
 # Installation Guide
 
-To run "pesitos" on your computer, you'll need to install Node.js and a Node.js package manager like npm or Yarn. Then, you can follow these steps to set up your development environment:
+To run the "pesitos" frontend on your computer, you'll need to install Node.js and a Node.js package manager like npm or Yarn. Then, you can follow these steps to set up your development environment:
 
   1 - Clone the project:
 
