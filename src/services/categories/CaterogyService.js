@@ -28,9 +28,12 @@ class CategoryService {
 
         let url = `${CATEGORY_API_BASE_URL}`;
 
-        
         if(params && params.clasification_id !== null){
             url = `${CATEGORY_API_BASE_URL}?clasification_id=${params.clasification_id}`;
+        }
+        
+        if(params && params.subclasification_id !== null){
+            url = `${CATEGORY_API_BASE_URL}?subclasification_id=${params.subclasification_id}`;
         }
 
         if(params && params.page !== null && params.page !== undefined){
@@ -41,7 +44,6 @@ class CategoryService {
            let keys = Object.keys(params.search);
            url = `${CATEGORY_API_BASE_URL}?page=${1}&${keys[0]}=${params.search.name}`;
        }    
-       console.log(url)
        return await axios.get(url);
     }
 

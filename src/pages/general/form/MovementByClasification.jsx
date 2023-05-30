@@ -12,6 +12,7 @@ import CaterogyService from '../../../services/categories/CaterogyService';
 import ClasificationService from '../../../services/clasifications/ClasificationService';
 import MovementService from '../../../services/movements/MovementService';
 import PaymentMethodService from '../../../services/PaymentMethods/PaymentMethodService';
+import SubclasificationService from '../../../services/subclasifications/SubclasificationService';
 
 export const MovementByClasification = () => {
   const toast = useRef();
@@ -22,11 +23,14 @@ export const MovementByClasification = () => {
   const [clasification, setClasification] = useState(null)
   const [categories, setCategories] = useState(null)
   const [methodPayments, setMethodPayments] = useState(null)
+  const [subclasifications, setSubclasifications] = useState(null)
+
 
   const [movement, setMovement] = useState(null);
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [paymentMethod, setPaymentMethod] = useState(null);
+  const [subclasification, setSubclasification] = useState(null);
   const [category, setCategory] = useState(null);
   const [typeBill, setTypeBill] = useState(null);
 
@@ -87,12 +91,31 @@ export const MovementByClasification = () => {
   }, []);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchSubclasifications = async () => {
       const params = { clasification_id: clasificationId }
       try {
 
         const { data: {data:clasificationResponse} }  = await ClasificationService.getClasification(clasificationId);
         setTypeBill(clasificationResponse.typebill_id);
+
+        const { data: {data} }  = await SubclasificationService.allSubclasifications(params);
+        setSubclasifications(data);
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+      
+    fetchSubclasifications();
+    
+
+  }, []);
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const params = { subclasification_id: subclasification }
+      try {
 
         const { data: response } = await CaterogyService.allCategories(params);
         setCategories(response.data);
@@ -101,13 +124,11 @@ export const MovementByClasification = () => {
         console.error(error);
       }
     };
-      
-    fetchCategories();
-    
+    if (subclasification) {
+      fetchCategories();
+    }
 
-
-  }, []);
-
+  }, [subclasification]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -128,6 +149,7 @@ export const MovementByClasification = () => {
       category_id: category,
       paymentMethod_id: paymentMethod,
       clasification_id: parseInt(clasificationId) ,
+      subclasification_id: subclasification,
       typebill_id: typeBill
     };
 
@@ -217,7 +239,10 @@ export const MovementByClasification = () => {
                     <label htmlFor="typeBill">Transacción</label>
                     <Dropdown value={clasification} optionValue="id" onChange={(e) => setClasification(e.value)} options={clasifications} optionLabel="name" placeholder="-- Seleccionar tipo de movimiento --" />
                   </div> */}
-                                
+                  <div className='field'>
+                    <label htmlFor="category">Clasificación</label>
+                    <Dropdown value={subclasification} optionValue="id" onChange={(e) => setSubclasification(e.value)} options={subclasifications} optionLabel="name" placeholder="-- Seleccionar clasificación --" />
+                  </div>        
                   <div className='field'>
                     <label htmlFor="category">Categorias</label>
                     <Dropdown value={category} optionValue="id" onChange={(e) => setCategory(e.value)} options={categories} optionLabel="name" placeholder="-- Seleccionar categoría --" />

@@ -146,9 +146,10 @@ export const MovementList = () => {
                         <Column field="amount" header="Monto"  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
                         <Column field="description" header="Descripción"  ></Column>
                         <Column field="lastDate" header="Fecha"  ></Column>
-                        <Column field="category.name" header="Categoria"  ></Column>
+                        <Column field="clasification.name" header="Tipo"  ></Column>
+                        <Column field="subclasification.name" header="Clasificación"  ></Column>
+                        <Column field="category.name" header="Categoría"  ></Column>
                         <Column field="waypay.name" header="Forma de pago"  ></Column>
-                        <Column field="typebill.name" header="Tipo"  ></Column>
 
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable> 

@@ -65,6 +65,30 @@ class MovementService {
        return await axios.get(url);
     }
 
+    allBillsIncomesTotalPerYear = async (params) => {
+
+        let url = `${MOVEMENTS_API_BASE_URL}/allByYear`
+        
+        if (Object.keys(params).length > 0) {
+            url += `?`;
+            const queryParams = [];
+            for (const key in params) {
+              if (params.hasOwnProperty(key)) {
+                if(params[key] !== null){
+                    queryParams.push(`${key}=${params[key]}`);
+                }
+              }
+            }
+            url += queryParams.join('&');
+        }
+       
+    //    if(params && params.search!==null && params.search?.name !== null){
+    //        let keys = Object.keys(params.search);
+    //        url = `${MOVEMENTS_API_BASE_URL}?page=${1}&${keys[0]}=${params.search.name}`;
+    //    }
+       return await axios.get(url);
+    }
+
     exportMovements= async (params) => {
 
         let url = `${MOVEMENTS_API_BASE_URL}/export`;

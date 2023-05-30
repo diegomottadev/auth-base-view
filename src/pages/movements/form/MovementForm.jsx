@@ -12,6 +12,7 @@ import CaterogyService from '../../../services/categories/CaterogyService';
 import ClasificationService from '../../../services/clasifications/ClasificationService';
 import MovementService from '../../../services/movements/MovementService';
 import PaymentMethodService from '../../../services/PaymentMethods/PaymentMethodService';
+import SubclasificationService from '../../../services/subclasifications/SubclasificationService';
 
 export const MovementForm = () => {
   const toast = useRef();
@@ -20,6 +21,7 @@ export const MovementForm = () => {
 
 
   const [clasifications, setClasifications] = useState(null)
+  const [subclasifications, setSubclasifications] = useState(null);
   const [categories, setCategories] = useState(null)
   const [methodPayments, setMethodPayments] = useState(null)
 
@@ -27,6 +29,7 @@ export const MovementForm = () => {
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [clasification, setClasification] = useState(null);
+  const [subclasification, setSubclasification] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [category, setCategory] = useState(null);
   const [typeBill, setTypeBill] = useState(null);
@@ -37,9 +40,10 @@ export const MovementForm = () => {
         await MovementService.getMovement(movementId).then(({ data: { data: data } }) => {
           setMovement(data);
           setAmount(data.amount);
-          setClasification(data.clasification.id);
-          setPaymentMethod(data.waypay.id);
-          setCategory(data.category.id);
+          setClasification(data.clasification?.id);
+          setSubclasification(data.subclasification?.id);
+          setPaymentMethod(data.waypay?.id);
+          setCategory(data.category?.id);
           setDescription(data.description)
           setTypeBill(data.typebill?.id)
         });
@@ -88,8 +92,28 @@ export const MovementForm = () => {
   }, []);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchsubclasifcations = async () => {
       const params = { clasification_id: clasification }
+      try {
+
+        const { data: response } = await SubclasificationService.allSubclasifications(params);
+        setSubclasifications(response.data);
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    if (clasification) {
+      fetchsubclasifcations();
+    }
+
+
+  }, [clasification]);
+
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const params = { subclasification_id: subclasification }
       try {
 
         const { data: {data:clasificationResponse} }  = await ClasificationService.getClasification(clasification);
@@ -102,18 +126,17 @@ export const MovementForm = () => {
         console.error(error);
       }
     };
-    if (clasification) {
+    if (subclasification) {
       fetchCategories();
     }
 
-
-  }, [clasification]);
+  }, [subclasification]);
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!amount && !clasification && !category && !paymentMethod) {
+    if (!amount && !clasification && !subclasification && !category && !paymentMethod) {
       toast.current.show({
         severity: 'error',
         summary: 'Error',
@@ -129,13 +152,14 @@ export const MovementForm = () => {
       category_id: category,
       paymentMethod_id: paymentMethod,
       clasification_id: clasification ,
+      subclasification_id: subclasification ,
+
       typebill_id: typeBill
     };
 
     try {
-      let response;
       if (movement) {
-        response = await MovementService.updateMovement(movement.id, body);
+        await MovementService.updateMovement(movement.id, body);
         toast.current.show({
           severity: 'success',
           summary: 'Exito',
@@ -143,7 +167,7 @@ export const MovementForm = () => {
           life: 3000,
         });
       } else {
-        response = await MovementService.createMovement(body);
+        await MovementService.createMovement(body);
         toast.current.show({
           severity: 'success',
           summary: 'Exito',
@@ -211,12 +235,15 @@ export const MovementForm = () => {
                   </div>
 
                   <div className='field'>
-                    <label htmlFor="typeBill">Transacción</label>
+                    <label htmlFor="typeBill">Tipo</label>
                     <Dropdown value={clasification} optionValue="id" onChange={(e) => setClasification(e.value)} options={clasifications} optionLabel="name" placeholder="-- Seleccionar tipo de movimiento --" />
                   </div>
-                                
                   <div className='field'>
-                    <label htmlFor="category">Categorias</label>
+                    <label htmlFor="typeBill">Clasificación</label>
+                    <Dropdown value={subclasification} optionValue="id" onChange={(e) => setSubclasification(e.value)} options={subclasifications} optionLabel="name" placeholder="-- Seleccionar clasificación --" />
+                  </div>              
+                  <div className='field'>
+                    <label htmlFor="category">Categoría</label>
                     <Dropdown value={category} optionValue="id" onChange={(e) => setCategory(e.value)} options={categories} optionLabel="name" placeholder="-- Seleccionar categoría --" />
                   </div>
                   <div className='field'>

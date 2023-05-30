@@ -22,9 +22,9 @@ const Timeline = ({movements,onLoadMoreMovents,loadingMoreMovements,onTotalMovem
                                 </div> */}
                                 <div className="timeline-content">
                                     <h5>$ {movement.amount}</h5>
-                                    <h3>{movement.clasification.name}</h3>
+                                    <h3>{movement?.clasification?.name}</h3>
 
-                                    <p>{movement.description}</p>
+                                    <p>{movement?.subclasification?.name}</p>
                                     <div className="timeline-footer">
                                         <i className="pi pi-clock"></i>
                                         <span>{movement.lastDate}</span>
@@ -35,7 +35,7 @@ const Timeline = ({movements,onLoadMoreMovents,loadingMoreMovements,onTotalMovem
                     })
                 }
             </ul>
-             {movements.length  != onTotalMovements &&
+             {movements.length  !== onTotalMovements &&
               <div className='flex align-items-center justify-content-center '>
                <Button label='Cargar mas' className="mr-2 mb-2" icon="pi pi-plus" loading={loadingMoreMovements} onClick={onLoadMoreMovents} />
               </div>

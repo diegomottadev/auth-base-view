@@ -131,7 +131,9 @@ const CategoryList = () => {
                         className="p-datatable-gridlines" header={header}
                         >
                         <Column field="name" header="Nombre"  headerStyle={{ width: '14%', minWidth: '10rem' }}></Column>
-                        <Column field="clasification.name" header="Clasificación"  ></Column>
+                        <Column field="clasification.name" header="Tipo"  ></Column>
+                        <Column field="subclasification.name" header="Clasificación"  ></Column>
+
                         <Column field="description" header="Descripción"  ></Column>
                         <Column body={actionBodyTemplate}></Column>
                     </DataTable> 
