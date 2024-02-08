@@ -1,31 +1,31 @@
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { saveAs } from 'file-saver';
-import CategoryService from '../../../services/categories/CaterogyService';
+import { roleServiceInstance } from '../../../../services/security/roles/RoleService';
 
-const CategoryToolbar = () => {
+
+const RoleToolbar = ({params}) => {
 
     const navigate = useNavigate();
 
-    const navigateToCategoryForm = () => {
-        navigate('/categories/new');
+    const navigateToRoleNewForm = () => {
+        navigate('/roles/new');
     };
 
-
     const onExportToExcel = async () => {
-        const url = await CategoryService.exportCategories();
-        const filename = 'categories.xlsx'; // Nombre del archivo
+        const url = await roleServiceInstance.exportRoles(params);
+        const filename = 'roles.xlsx'; // Nombre del archivo
         saveAs(url, filename); // Guardar el archivo en una ubicación específica
     };
 
     const toolbarLeftTemplate = () => {
         return (
             <>
-                <Button label="Nuevo" icon="pi pi-plus-circle" style={{ marginRight: '.5em' }} onClick={navigateToCategoryForm} />
+                <Button label="Nuevo" icon="pi pi-plus-circle" style={{ marginRight: '.5em' }} onClick={navigateToRoleNewForm} />
             </>
         );
     };
@@ -51,4 +51,4 @@ const CategoryToolbar = () => {
    
 }
 
-export default CategoryToolbar;
+export default RoleToolbar;

@@ -1,30 +1,31 @@
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Toolbar } from 'primereact/toolbar';
 import { Button } from 'primereact/button';
 import { saveAs } from 'file-saver';
-import PaymentMethodService from '../../../services/PaymentMethods/PaymentMethodService';
+import { userServiceInstance } from '../../../../services/security/users/UserService';
 
-const PaymentMethodToolbar = () => {
+
+const UserToolbar = ({params}) => {
 
     const navigate = useNavigate();
 
-    const navigateToMethodPaymentForm = () => {
-        navigate('/paymentMethods/new');
+    const navigateToUserNewForm = () => {
+        navigate('/users/new');
     };
 
     const onExportToExcel = async () => {
-        const url = await PaymentMethodService.exportPaymentMethods();
-        const filename = 'methods-payments.xlsx'; // Nombre del archivo
+        const url = await userServiceInstance.exportRoles(params);
+        const filename = 'users.xlsx'; // Nombre del archivo
         saveAs(url, filename); // Guardar el archivo en una ubicación específica
     };
 
     const toolbarLeftTemplate = () => {
         return (
             <>
-                <Button label="Nuevo" icon="pi pi-plus-circle" style={{ marginRight: '.5em' }} onClick={navigateToMethodPaymentForm} />
+                <Button label="Nuevo" icon="pi pi-plus-circle" style={{ marginRight: '.5em' }} onClick={navigateToUserNewForm} />
             </>
         );
     };
@@ -50,4 +51,4 @@ const PaymentMethodToolbar = () => {
    
 }
 
-export default PaymentMethodToolbar;
+export default UserToolbar;

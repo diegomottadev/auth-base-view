@@ -23,14 +23,11 @@ import {  initAxiosInterceptors } from './helpers/auth-helpers';
 import { Login } from './pages/Login';
 import useToken from './hooks/useToken';
 import { me } from './services/auth/Authorization';
-import Category from './pages/categories/Category';
-import CategoryForm from './pages/categories/forms/CategoryForm';
-import PaymentMethod from './pages/PaymentMethods/PaymentMethod';
-import PaymentMethodForm from './pages/PaymentMethods/form/PaymentMethodForm';
-import Movement from './pages/movements/Movement';
-import MovementForm from './pages/movements/form/MovementForm';
-import General from './pages/general/General';
-import { MovementByClasification } from './pages/general/form/MovementByClasification';
+import EmptyPage from './pages/EmptyPage';
+import RolePage from './pages/security/roles/RolePage';
+import RoleForm from './pages/security/roles/form/RoleForm';
+import UserForm from './pages/security/users/form/UserForm';
+import UserPage from './pages/security/users/UserPage';
 
 
 
@@ -88,32 +85,37 @@ const App = () => {
     // ];
 
     const menu = [
+        // {
+        //     label: 'Panel de control',
+        //     icon: 'pi pi-fw pi-home',
+        //     items: [{ label: 'General', icon: 'pi pi-fw pi-home', to: '/' }]
+        // },
+
         {
-            label: 'Panel de control',
-            icon: 'pi pi-fw pi-home',
-            items: [{ label: 'General', icon: 'pi pi-fw pi-home', to: '/' }]
-        },
-        {
-            label: 'Secciones',
-            icon: 'pi pi-fw pi-sitemap',
-            items: [
-                { label: 'Movimientos', icon: 'pi pi-fw pi-money-bill', to: '/movements' },
-                { label: 'Categorias', icon: 'pi pi-fw pi-table', to: '/categories' },
-                { label: 'Formas de pago', icon: 'pi pi-fw pi-bookmark', to: '/paymentMethods' },
-            ]
-        },
-      
-        {
-            label: 'Ayuda',
-            icon: 'pi pi-fw pi-help',
+            icon: 'pi pi-fw pi-align-left',
             items: [
                 {
-                    label: 'Manual de usuario',
-                    icon: 'pi pi-fw pi-book',
-                    to: '/documentation'
-                }
+                    label: 'Seguridad',
+                    icon: 'pi pi-fw pi-align-left',
+                    items: [
+                        { label: 'Roles', icon: 'pi pi-fw pi-money-bill', to: '/roles' },
+                        { label: 'Usuarios', icon: 'pi pi-fw pi-money-bill', to: '/users' },
+                    ]
+                },
+                // {
+                //     label: 'Submenu 2.2',
+                //     icon: 'pi pi-fw pi-align-left',
+                //     items: [
+                //         { label: 'Submenu 2.2.1', icon: 'pi pi-fw pi-align-left' },
+                //         { label: 'Submenu 2.2.2', icon: 'pi pi-fw pi-align-left' }
+                //     ]
+                // }
             ]
-        }
+        },
+
+
+        
+
     ];
 
     /*
@@ -365,7 +367,7 @@ const App = () => {
                 <div className={menuContainerClassName} onClick={onMenuClick}>
                     <div className="layout-menu-logo">
                         <button className="p-link text-center" onClick={() => navigate('/')}>
-                            <img  id="layout-menu-logo" src="assets/layout/images/pesitos-sidebar.png" library="babylon-layout" alt="babylon-logo" />
+                            {/* <img  id="layout-menu-logo" src="assets/layout/images/pesitos-sidebar.png" library="babylon-layout" alt="babylon-logo" /> */}
                         </button>
                     </div>
                     <div className="layout-menu-wrapper">
@@ -381,8 +383,14 @@ const App = () => {
                     <AppBreadcrumb meta={meta} /> :'' }
                      */}
                         <Routes>
-                            <Route exact path="/" element={<General />} />
-                            <Route exact path="/movements" element={<Movement />} />
+                            <Route exact path="/" element={<EmptyPage />} />
+                            <Route exact path="/roles" element={<RolePage />} />
+                            <Route exact path="/roles/new" element={<RoleForm />}  />
+                            <Route exact path="/roles/:roleId/edit" element={<RoleForm />} />
+                            <Route exact path="/users" element={<UserPage />} />
+                            <Route exact path="/users/new" element={<UserForm />}  />
+                            <Route exact path="/users/:userId/edit" element={<UserForm />} />
+                            {/* <Route exact path="/movements" element={<Movement />} />
                             <Route exact path="/categories" element={<Category />} />
                             <Route exact path="/paymentMethods" element={<PaymentMethod />} />
                             <Route exact path="/categories/new" element={<CategoryForm />}  />
@@ -391,7 +399,7 @@ const App = () => {
                             <Route exact path="/paymentMethods/:paymentMethodId/edit" element={<PaymentMethodForm />} />
                             <Route exact path="/movements/new" element={<MovementForm/>}  />
                             <Route exact path="/movements/:movementId/edit" element={<MovementForm />} />
-                            <Route exact path="/movements/:clasificationId/clasification/new" element={<MovementByClasification />} />
+                            <Route exact path="/movements/:clasificationId/clasification/new" element={<MovementByClasification />} /> */}
 
                         </Routes>
     
@@ -421,10 +429,9 @@ const App = () => {
 
     const  LogoutRoute = ({ mostrarError ,error }) =>{
         return (
-                    <Routes>
-                        <Route path="/" element={<Login setToken={setToken} mostrarError={mostrarError} error={error}  />} />
-                    </Routes>
-   
+            <Routes>
+                <Route path="/" element={<Login setToken={setToken} mostrarError={mostrarError} error={error}  />} />
+            </Routes>
         );
     }
 
@@ -432,8 +439,7 @@ const App = () => {
     
     return (
         <div>
-               
-                <LoginRoute mostrarError={mostrarError} usuario={usuario}  />) 
+           <LoginRoute mostrarError={mostrarError} usuario={usuario}  />) 
         </div>
     );
 };
