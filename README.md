@@ -1,15 +1,14 @@
 # Goal of the project
 
-The project "pesitos.app" evaluates my expenses and financial goals, helping me save smartly. This project is currently in development, where I am applying React, Hooks, Node.js, and Express.
-
+Frontend utilizing React with JavaScript that incorporates user, role, and permission logic crucial for orchestrating flow within any application interface. It offers components, hooks, and services to interact with backend APIs for user authentication, role management, and permission control. This ensures secure access to application features and resources based on user roles and permissions.
 
 # Installation Guide
 
-To run the "pesitos" frontend on your computer, you'll need to install Node.js and a Node.js package manager like npm or Yarn. Then, you can follow these steps to set up your development environment:
+To run the frontend on your computer, you'll need to install Node.js and a Node.js package manager like npm or Yarn. Then, you can follow these steps to set up your development environment:
 
   1 - Clone the project:
 
-    git clone https://github.com/diegomottadev/pesitos-view.git
+    git clone https://github.com/diegomottadev/auth-base-view.git
   
   2 - Install dependencies:
     
@@ -21,4 +20,4 @@ To run the "pesitos" frontend on your computer, you'll need to install Node.js a
 
   4 - Clone the backend project and follow the instructions in the following link
 
-    https://gitlab.com/diegomotta18/pesitos-back
+    https://gitlab.com/diegomotta18/auth-base-app
