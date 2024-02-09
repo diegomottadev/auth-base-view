@@ -28,6 +28,7 @@ import RolePage from './pages/security/roles/RolePage';
 import RoleForm from './pages/security/roles/form/RoleForm';
 import UserForm from './pages/security/users/form/UserForm';
 import UserPage from './pages/security/users/UserPage';
+import PermissionList from './pages/security/permissions/components/PermissionList';
 
 
 
@@ -387,6 +388,7 @@ const App = () => {
                             <Route exact path="/roles" element={<RolePage />} />
                             <Route exact path="/roles/new" element={<RoleForm />}  />
                             <Route exact path="/roles/:roleId/edit" element={<RoleForm />} />
+                            <Route exact path="/roles/:roleId/permissions" element={<PermissionList />} />
                             <Route exact path="/users" element={<UserPage />} />
                             <Route exact path="/users/new" element={<UserForm />}  />
                             <Route exact path="/users/:userId/edit" element={<UserForm />} />

@@ -20,6 +20,11 @@ class RoleService {
         return response.data;
     };
 
+    updateRolePermissions = async (roleId, body) => {
+        const response = await axios.put(`${ROLE_API_BASE_URL}/${roleId}/permissions`, body);
+        return response.data;
+    };
+
     deleteRole = async (roleId) => {
         const response = await axios.delete(`${ROLE_API_BASE_URL}/${roleId}`);
         return response.data;

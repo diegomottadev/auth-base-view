@@ -65,6 +65,11 @@ const RoleList = () => {
         navigate(`/roles/${roleId}/edit`);
     };
 
+
+    const onPermissions = (roleId) => {
+        navigate(`/roles/${roleId}/permissions`);
+    };
+    
     const onDeleteRole = async (roleId) => {
         try {
             const result = await Swal.fire({
@@ -121,6 +126,7 @@ const RoleList = () => {
             <div className="actions">
                 <Button tooltip={"Editar"} tooltipOptions={{ position: 'top' }} icon="pi pi-pencil" className="p-button-raised p-button-success p-mr-2" onClick={() => onEditRole(rowData.id)} />
                 <Button tooltip={"Eliminar"} tooltipOptions={{ position: 'top' }} icon="pi pi-trash" className="p-button-raised p-button-danger p-mr-2" onClick={() => onDeleteRole(rowData.id)} />
+                <Button tooltip={"Permisos"} tooltipOptions={{ position: 'top' }} icon="pi pi-list" className="p-button-raised p-button-info p-mr-2" onClick={() => onPermissions(rowData.id)} />
             </div>
         );
     }
