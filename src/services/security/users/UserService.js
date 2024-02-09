@@ -41,7 +41,7 @@ class UserService {
     }
 
     exportUsers= async (params) => {
-        console.log(params)
+
         let url = `${USER_API_BASE_URL}/export`;
         if(params!==null){
             let keys = Object.keys(params);

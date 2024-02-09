@@ -17,7 +17,7 @@ const UserToolbar = ({params}) => {
     };
 
     const onExportToExcel = async () => {
-        const url = await userServiceInstance.exportRoles(params);
+        const url = await userServiceInstance.exportUsers(params);
         const filename = 'users.xlsx'; // Nombre del archivo
         saveAs(url, filename); // Guardar el archivo en una ubicación específica
     };

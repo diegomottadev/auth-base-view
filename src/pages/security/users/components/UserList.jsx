@@ -45,6 +45,7 @@ const UserList = () => {
             }
         });
     }, []);
+
     useEffect(() => {
         const loadLazyData = async () => {
             try {
@@ -165,7 +166,6 @@ const UserList = () => {
             <Error mensaje={'Hubo un problema con la carga del listado de usuarios'}></Error>
         );
     }
-
 
     return (
         <div>
