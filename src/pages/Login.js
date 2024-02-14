@@ -32,10 +32,11 @@ export const Login = ({ mostrarError, error, setToken }) => {
             <div className="login-panel"></div>
 
             <div className="login-content">
-                <img src="assets/layout/images/pesitos-login.png" alt="babylon-layout" />
+                {/* <img src="assets/layout/images/pesitos-login.png" alt="babylon-layout" /> */}
 
                 <h1>
-                    <span>Ingreso </span>a Pesitos
+                    {/* <span>Ingreso </span>  a Pesitos */}
+                    <span>Ingreso </span>
                 </h1>
                 <p>Bienvenido👋, usa tus credenciales de acceso para ingresar👇</p>
 
