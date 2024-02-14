@@ -20,4 +20,4 @@ To run the frontend on your computer, you'll need to install Node.js and a Node.
 
   4 - Clone the backend project and follow the instructions in the following link
 
-    https://gitlab.com/diegomotta18/auth-base-app
+    https://github.com/diegomottadev/auth-base-app.git
